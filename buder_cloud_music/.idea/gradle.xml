@@ -11,6 +11,7 @@
             <option value="$PROJECT_DIR$/imooc_voice" />
             <option value="$PROJECT_DIR$/lib_audio" />
             <option value="$PROJECT_DIR$/lib_common_ui" />
+            <option value="$PROJECT_DIR$/lib_network" />
             <option value="$PROJECT_DIR$/lib_video" />
           </set>
         </option>
