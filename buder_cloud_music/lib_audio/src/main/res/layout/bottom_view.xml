@@ -61,6 +61,8 @@
                 android:id="@+id/play_view"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
+                android:clickable="true"
+                android:longClickable="true"
                 android:layout_gravity="center_vertical"
                 android:src="@mipmap/note_btn_play_white" />
 
@@ -68,6 +70,8 @@
                 android:id="@+id/show_list_view"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
+                android:clickable="true"
+                android:longClickable="true"
                 android:layout_marginStart="25dp"
                 android:layout_marginEnd="20dp"
                 android:src="@mipmap/audio_black_cat" />
