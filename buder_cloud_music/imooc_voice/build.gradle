@@ -22,6 +22,10 @@ android {
         }
     }
 
+    lintOptions {
+        abortOnError false
+    }
+
 }
 
 dependencies {
@@ -32,7 +36,10 @@ dependencies {
     //rxjava
     implementation rootProject.depsLibs.rxjava
     implementation rootProject.depsLibs.rxandroid
+    //eventbus
     implementation rootProject.depsLibs.eventbus
+    //greendao类库依赖
+    implementation rootProject.depsLibs.greendao
 
     implementation project(':lib_common_ui')
     implementation project(':lib_network')

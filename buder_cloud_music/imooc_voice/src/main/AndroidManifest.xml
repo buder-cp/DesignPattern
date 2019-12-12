@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
 
-        <activity android:name=".view.home.HomeActivity">
+        <activity android:name=".view.loading.LoadingActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <action android:name="android.intent.action.MAIN" />
@@ -26,6 +26,10 @@
             android:name=".view.login.LoginActivity"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".view.home.HomeActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
 
     </application>
 </manifest>

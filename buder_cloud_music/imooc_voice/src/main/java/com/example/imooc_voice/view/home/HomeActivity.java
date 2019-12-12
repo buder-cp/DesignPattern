@@ -17,6 +17,7 @@ import com.example.imooc_voice.view.home.model.CHANNEL;
 import com.example.imooc_voice.view.login.LoginActivity;
 import com.example.imooc_voice.view.login.manager.UserManager;
 import com.example.imooc_voice.view.login.user.LoginEvent;
+import com.example.lib_audio.app.AudioHelper;
 import com.example.lib_audio.mediaplayer.core.AudioController;
 import com.example.lib_audio.mediaplayer.model.AudioBean;
 import com.example.lib_common_ui.base.BaseActivity;
@@ -92,7 +93,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
                         "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1559698289780&di=5146d48002250bf38acfb4c9b4bb6e4e&imgtype=0&src=http%3A%2F%2Fpic.baike.soso.com%2Fp%2F20131220%2Fbki-20131220170401-1254350944.jpg",
                         "2:45"));
 
-        AudioController.getInstance().setQueue(mLists);
+        AudioHelper.startMusicService(mLists);
     }
 
     private void initView() {
