@@ -1,5 +1,7 @@
 package com.example.lib_audio.mediaplayer.model;
 
+import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.NotNull;
 import org.greenrobot.greendao.annotation.Unique;
@@ -8,13 +10,13 @@ import java.io.Serializable;
 
 /**
  * 1.歌曲实体
- * 2.引入greendao以后扩展了许多
  */
+@Entity
 public class AudioBean implements Serializable {
 
     private static final long serialVersionUID = -8849228294348905620L;
 
-
+    @Generated(hash = 1701787808)
     public AudioBean(String id, @NotNull String mUrl, @NotNull String name, @NotNull String author,
                      @NotNull String album, @NotNull String albumInfo, @NotNull String albumPic,
                      @NotNull String totalTime) {
@@ -26,6 +28,11 @@ public class AudioBean implements Serializable {
         this.albumInfo = albumInfo;
         this.albumPic = albumPic;
         this.totalTime = totalTime;
+    }
+
+
+    @Generated(hash = 1628963493)
+    public AudioBean() {
     }
 
 
