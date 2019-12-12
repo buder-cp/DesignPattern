@@ -58,7 +58,10 @@
             android:id="@+id/view_pager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_above="@id/bottom_view"
             android:layout_below="@id/title_layout" />
+
+
     </RelativeLayout>
 
     <!-- 存放侧滑菜单-->
