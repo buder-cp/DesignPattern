@@ -8,6 +8,7 @@ import android.os.Message;
 import com.example.imooc_voice.R;
 import com.example.imooc_voice.view.home.HomeActivity;
 import com.example.lib_common_ui.base.BaseActivity;
+import com.example.lib_common_ui.base.constant.Constant;
 
 public class LoadingActivity extends BaseActivity {
 

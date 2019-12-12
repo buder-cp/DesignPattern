@@ -152,22 +152,23 @@ public class MusicService extends Service implements NotificationHelper.Notifica
         @Override
         public void onReceive(Context context, Intent intent) {
             if (intent == null || TextUtils.isEmpty(intent.getAction())) {
-                String action = intent.getStringExtra(EXTRA);
-                switch (action) {
-                    case EXTRA_PLAY:
-                        AudioController.getInstance().playOrPause();
-                        break;
-                    case EXTRA_PRE:
-                        AudioController.getInstance().previous();
-                        break;
-                    case EXTRA_NEXT:
-                        AudioController.getInstance().next();
-                        break;
-                    case EXTRA_FAV:
-                        //收藏广播处理
-                        AudioController.getInstance().changeFavouriteStatus();
-                        break;
-                }
+                return;
+            }
+            String action = intent.getStringExtra(EXTRA);
+            switch (action) {
+                case EXTRA_PLAY:
+                    AudioController.getInstance().playOrPause();
+                    break;
+                case EXTRA_PRE:
+                    AudioController.getInstance().previous();
+                    break;
+                case EXTRA_NEXT:
+                    AudioController.getInstance().next();
+                    break;
+                case EXTRA_FAV:
+                    //收藏广播处理
+                    AudioController.getInstance().changeFavourite();
+                    break;
             }
         }
     }

@@ -100,11 +100,9 @@ public class NotificationHelper {
         mRemoteViews = new RemoteViews(packageName, layoutId);
         mRemoteViews.setTextViewText(R.id.title_view, mAudioBean.name);
         mRemoteViews.setTextViewText(R.id.tip_view, mAudioBean.album);
-        if (GreenDaoHelper.selectFavourite(mAudioBean) != null) {
-            //被收藏过
+        if (null != GreenDaoHelper.selectFavourite(mAudioBean)) {
             mRemoteViews.setImageViewResource(R.id.favourite_view, R.mipmap.note_btn_loved);
         } else {
-            //没收藏过
             mRemoteViews.setImageViewResource(R.id.favourite_view, R.mipmap.note_btn_love_white);
         }
 
@@ -113,46 +111,47 @@ public class NotificationHelper {
         mSmallRemoteViews.setTextViewText(R.id.title_view, mAudioBean.name);
         mSmallRemoteViews.setTextViewText(R.id.tip_view, mAudioBean.album);
 
-        //点击播放按钮要发关的广播
+        //点击播放按钮广播
         Intent playIntent = new Intent(MusicService.NotificationReceiver.ACTION_STATUS_BAR);
         playIntent.putExtra(MusicService.NotificationReceiver.EXTRA,
                 MusicService.NotificationReceiver.EXTRA_PLAY);
         PendingIntent playPendingIntent =
-                PendingIntent.getBroadcast(AudioHelper.getContext(),
-                        1, playIntent,
-                        PendingIntent.FLAG_CANCEL_CURRENT);
+                PendingIntent.getBroadcast(AudioHelper.getContext(), 1, playIntent,
+                        PendingIntent.FLAG_UPDATE_CURRENT);
         mRemoteViews.setOnClickPendingIntent(R.id.play_view, playPendingIntent);
+        mRemoteViews.setImageViewResource(R.id.play_view, R.mipmap.note_btn_play_white);
         mSmallRemoteViews.setOnClickPendingIntent(R.id.play_view, playPendingIntent);
+        mSmallRemoteViews.setImageViewResource(R.id.play_view, R.mipmap.note_btn_play_white);
 
-        //点上一首按钮要发送的广播
+        //点击上一首按钮广播
         Intent previousIntent = new Intent(MusicService.NotificationReceiver.ACTION_STATUS_BAR);
-        playIntent.putExtra(MusicService.NotificationReceiver.EXTRA,
+        previousIntent.putExtra(MusicService.NotificationReceiver.EXTRA,
                 MusicService.NotificationReceiver.EXTRA_PRE);
         PendingIntent previousPendingIntent =
-                PendingIntent.getBroadcast(AudioHelper.getContext(),
-                        2, previousIntent,
-                        PendingIntent.FLAG_CANCEL_CURRENT);
+                PendingIntent.getBroadcast(AudioHelper.getContext(), 2, previousIntent,
+                        PendingIntent.FLAG_UPDATE_CURRENT);
         mRemoteViews.setOnClickPendingIntent(R.id.previous_view, previousPendingIntent);
+        mRemoteViews.setImageViewResource(R.id.previous_view, R.mipmap.note_btn_pre_white);
 
-        //点下一首按钮要发送的广播
+        //点击下一首按钮广播
         Intent nextIntent = new Intent(MusicService.NotificationReceiver.ACTION_STATUS_BAR);
-        playIntent.putExtra(MusicService.NotificationReceiver.EXTRA,
-                MusicService.NotificationReceiver.EXTRA_NEXT);
+        nextIntent.putExtra(MusicService.NotificationReceiver.EXTRA,
+                MusicService.NotificationReceiver.EXTRA_PRE);
         PendingIntent nextPendingIntent =
-                PendingIntent.getBroadcast(AudioHelper.getContext(),
-                        3, nextIntent,
-                        PendingIntent.FLAG_CANCEL_CURRENT);
+                PendingIntent.getBroadcast(AudioHelper.getContext(), 3, nextIntent,
+                        PendingIntent.FLAG_UPDATE_CURRENT);
         mRemoteViews.setOnClickPendingIntent(R.id.next_view, nextPendingIntent);
+        mRemoteViews.setImageViewResource(R.id.next_view, R.mipmap.note_btn_next_white);
         mSmallRemoteViews.setOnClickPendingIntent(R.id.next_view, nextPendingIntent);
+        mSmallRemoteViews.setImageViewResource(R.id.next_view, R.mipmap.note_btn_next_white);
 
-        //点下一首按钮要发送的广播
+        //点击收藏按钮广播
         Intent favouriteIntent = new Intent(MusicService.NotificationReceiver.ACTION_STATUS_BAR);
-        playIntent.putExtra(MusicService.NotificationReceiver.EXTRA,
+        favouriteIntent.putExtra(MusicService.NotificationReceiver.EXTRA,
                 MusicService.NotificationReceiver.EXTRA_FAV);
         PendingIntent favouritePendingIntent =
-                PendingIntent.getBroadcast(AudioHelper.getContext(),
-                        4, favouriteIntent,
-                        PendingIntent.FLAG_CANCEL_CURRENT);
+                PendingIntent.getBroadcast(AudioHelper.getContext(), 4, favouriteIntent,
+                        PendingIntent.FLAG_UPDATE_CURRENT);
         mRemoteViews.setOnClickPendingIntent(R.id.favourite_view, favouritePendingIntent);
     }
 
