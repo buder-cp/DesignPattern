@@ -1,8 +1,12 @@
 package com.example.lib_audio.mediaplayer.core;
 
+import android.util.Log;
+
 import com.example.lib_audio.exception.AudioQueueEmptyException;
+import com.example.lib_audio.mediaplayer.db.GreenDaoHelper;
 import com.example.lib_audio.mediaplayer.events.AudioCompleteEvent;
 import com.example.lib_audio.mediaplayer.events.AudioErrorEvent;
+import com.example.lib_audio.mediaplayer.events.AudioFavouriteEvent;
 import com.example.lib_audio.mediaplayer.events.AudioPlayModeEvent;
 import com.example.lib_audio.mediaplayer.model.AudioBean;
 
@@ -241,6 +245,7 @@ public class AudioController {
      * 自动切换播放/暂停
      */
     public void playOrPause() {
+        Log.e("renzhiqiang", "playOrPause");
         if (isStartState()) {
             pause();
         } else if (isPauseState()) {
@@ -260,6 +265,18 @@ public class AudioController {
      */
     public boolean isPauseState() {
         return CustomMediaPlayer.Status.PAUSED == getStatus();
+    }
+
+
+    public void changeFavouriteStatus() {
+        if (null != GreenDaoHelper.selectFavourite(getNowPlaying())) {
+            //取消收藏
+            GreenDaoHelper.removeFavourite(getNowPlaying());
+            EventBus.getDefault().post(new AudioFavouriteEvent(false));
+        } else {
+            GreenDaoHelper.addFavourite(getNowPlaying());
+            EventBus.getDefault().post(new AudioFavouriteEvent(true));
+        }
     }
 
     //插放完毕事件处理

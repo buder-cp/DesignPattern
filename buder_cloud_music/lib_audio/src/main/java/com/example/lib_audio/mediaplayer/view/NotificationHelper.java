@@ -14,6 +14,7 @@ import com.example.lib_audio.R;
 import com.example.lib_audio.app.AudioHelper;
 import com.example.lib_audio.mediaplayer.core.AudioController;
 import com.example.lib_audio.mediaplayer.core.MusicService;
+import com.example.lib_audio.mediaplayer.db.GreenDaoHelper;
 import com.example.lib_audio.mediaplayer.model.AudioBean;
 import com.example.lib_image_loader.app.ImageLoaderManager;
 
@@ -99,7 +100,13 @@ public class NotificationHelper {
         mRemoteViews = new RemoteViews(packageName, layoutId);
         mRemoteViews.setTextViewText(R.id.title_view, mAudioBean.name);
         mRemoteViews.setTextViewText(R.id.tip_view, mAudioBean.album);
-
+        if (GreenDaoHelper.selectFavourite(mAudioBean) != null) {
+            //被收藏过
+            mRemoteViews.setImageViewResource(R.id.favourite_view, R.mipmap.note_btn_loved);
+        } else {
+            //没收藏过
+            mRemoteViews.setImageViewResource(R.id.favourite_view, R.mipmap.note_btn_love_white);
+        }
 
         int smalllayoutId = R.layout.notification_small_layout;
         mSmallRemoteViews = new RemoteViews(packageName, smalllayoutId);
@@ -169,7 +176,13 @@ public class NotificationHelper {
                             mAudioBean.albumPic
                     );
             //更新收藏状态
-
+            if (GreenDaoHelper.selectFavourite(mAudioBean) != null) {
+                //被收藏过
+                mRemoteViews.setImageViewResource(R.id.favourite_view, R.mipmap.note_btn_loved);
+            } else {
+                //没收藏过
+                mRemoteViews.setImageViewResource(R.id.favourite_view, R.mipmap.note_btn_love_white);
+            }
             //更新小布局
             mSmallRemoteViews.setImageViewResource(R.id.play_view, R.mipmap.note_btn_pause_white);
             mRemoteViews.setTextViewText(R.id.title_view, mAudioBean.name);
@@ -209,6 +222,13 @@ public class NotificationHelper {
         }
     }
 
+    public void changeFavouriteStatus(boolean isFavourite) {
+        if (mRemoteViews != null) {
+            mRemoteViews.setImageViewResource(R.id.favourite_view,
+                    isFavourite ? R.mipmap.note_btn_loved : R.mipmap.note_btn_love_white);
+            mNotificationManager.notify(NOTIFICATION_ID, mNotification);
+        }
+    }
 
     public Notification getNotification() {
         return mNotification;

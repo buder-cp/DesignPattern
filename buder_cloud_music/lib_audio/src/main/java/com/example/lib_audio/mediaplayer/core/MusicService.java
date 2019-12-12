@@ -11,6 +11,7 @@ import android.text.TextUtils;
 
 
 import com.example.lib_audio.app.AudioHelper;
+import com.example.lib_audio.mediaplayer.events.AudioFavouriteEvent;
 import com.example.lib_audio.mediaplayer.events.AudioLoadEvent;
 import com.example.lib_audio.mediaplayer.events.AudioPauseEvent;
 import com.example.lib_audio.mediaplayer.events.AudioStartEvent;
@@ -30,7 +31,6 @@ import static com.example.lib_audio.mediaplayer.view.NotificationHelper.NOTIFICA
  * 音乐后台服务,并更新notification状态
  */
 public class MusicService extends Service implements NotificationHelper.NotificationHelperListener {
-
     /**
      * 常量区
      */
@@ -130,6 +130,13 @@ public class MusicService extends Service implements NotificationHelper.Notifica
         NotificationHelper.getInstance().showPauseStatus();
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onAudioFavouriteEvent(AudioFavouriteEvent event) {
+        //更新notification状态为pause态
+        NotificationHelper.getInstance().changeFavouriteStatus(event.isFavourite);
+    }
+
+
     /**
      * 接收Notification发送的广播
      */
@@ -158,6 +165,7 @@ public class MusicService extends Service implements NotificationHelper.Notifica
                         break;
                     case EXTRA_FAV:
                         //收藏广播处理
+                        AudioController.getInstance().changeFavouriteStatus();
                         break;
                 }
             }
