@@ -1,6 +1,7 @@
 package com.example.lib_audio;
 
 import android.animation.ObjectAnimator;
+import android.app.Activity;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -16,6 +17,7 @@ import com.example.lib_audio.mediaplayer.events.AudioLoadEvent;
 import com.example.lib_audio.mediaplayer.events.AudioPauseEvent;
 import com.example.lib_audio.mediaplayer.events.AudioStartEvent;
 import com.example.lib_audio.mediaplayer.model.AudioBean;
+import com.example.lib_audio.mediaplayer.view.MusicPlayerActivity;
 import com.example.lib_image_loader.app.ImageLoaderManager;
 
 import org.greenrobot.eventbus.EventBus;
@@ -63,7 +65,7 @@ public class BottomMusicView extends RelativeLayout {
             @Override
             public void onClick(View v) {
                 //跳到音乐播放Activitity
-                Log.e("buder" , "rootView click");
+                MusicPlayerActivity.start((Activity) mContext);
             }
         });
         mLeftView = rootView.findViewById(R.id.album_view);
@@ -82,17 +84,14 @@ public class BottomMusicView extends RelativeLayout {
             @Override
             public void onClick(View v) {
                 //处理播放暂停事件
-                AudioController.getInstance().play();
-                Log.e("buder" , "mPlayView click");
+                AudioController.getInstance().playOrPause();
             }
         });
-
         mRightView = rootView.findViewById(R.id.show_list_view);
         mRightView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 //显示音乐列表对话框
-                Log.e("buder" , "mRightView click");
             }
         });
     }
@@ -141,5 +140,4 @@ public class BottomMusicView extends RelativeLayout {
             mPlayView.setImageResource(R.mipmap.note_btn_pause_white);
         }
     }
-
 }

@@ -81,8 +81,12 @@ public class NotificationHelper {
                 channel.enableVibration(false);
                 mNotificationManager.createNotificationChannel(channel);
             }
+            Intent intent = new Intent(AudioHelper.getContext(), MusicPlayerActivity.class);
+            PendingIntent pendingIntent = PendingIntent.getActivity(AudioHelper.getContext(), 0, intent,
+                    PendingIntent.FLAG_UPDATE_CURRENT);
             NotificationCompat.Builder builder =
                     new NotificationCompat.Builder(AudioHelper.getContext(), CHANNEL_ID)
+                            .setContentIntent(pendingIntent)
                             .setSmallIcon(R.mipmap.ic_launcher)
                             .setCustomBigContentView(mRemoteViews) //大布局
                             .setContent(mSmallRemoteViews); //正常布局，两个布局可以切换

@@ -12,10 +12,10 @@
             android:enabled="true"
             android:exported="false" />
 
-        <!--<activity
+        <activity
             android:name=".mediaplayer.view.MusicPlayerActivity"
             android:enabled="true"
             android:exported="false"
-            android:launchMode="singleTask" />-->
+            android:launchMode="singleTask" />
     </application>
 </manifest>
