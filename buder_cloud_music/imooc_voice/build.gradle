@@ -45,4 +45,5 @@ dependencies {
     implementation project(':lib_network')
     implementation project(':lib_image_loader')
     implementation project(':lib_audio')
+    implementation project(':lib_share')
 }
