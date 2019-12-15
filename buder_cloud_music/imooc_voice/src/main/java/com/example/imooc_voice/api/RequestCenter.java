@@ -1,6 +1,7 @@
 package com.example.imooc_voice.api;
 
 
+import com.example.imooc_voice.view.friend.model.BaseFriendModel;
 import com.example.imooc_voice.view.login.user.User;
 import com.example.lib_network.okhttp.CommonOkHttpClient;
 import com.example.lib_network.okhttp.request.CommonRequest;
@@ -15,7 +16,6 @@ public class RequestCenter {
 
     static class HttpConstants {
         private static final String ROOT_URL = "http://imooc.com/api";
-//        private static final String ROOT_URL = "http://39.97.122.129";
 
         /**
          * 首页请求接口
@@ -45,8 +45,19 @@ public class RequestCenter {
      */
     public static void login(DisposeDataListener listener) {
         RequestParams params = new RequestParams();
-        params.put("mb", "13700245171");
-        params.put("pwd", "buder");
+        params.put("mb", "18734924592");
+        params.put("pwd", "999999q");
         RequestCenter.postRequest(HttpConstants.LOGIN, params, listener, User.class);
+    }
+
+    /**
+     * 朋友页面请求
+     *
+     * @param listener
+     */
+    public static void requestFriendData(DisposeDataListener listener) {
+        postRequest(HttpConstants.HOME_FRIEND,
+                null,
+                listener, BaseFriendModel.class);
     }
 }
