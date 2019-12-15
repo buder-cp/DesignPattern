@@ -42,10 +42,13 @@ dependencies {
     //greendao类库依赖
     implementation rootProject.depsLibs.greendao
 
+    //本地库工程依赖
     implementation project(':lib_common_ui')
     implementation project(':lib_network')
     implementation project(':lib_image_loader')
     implementation project(':lib_audio')
     implementation project(':lib_share')
     implementation project(':lib_pullalive')
+    implementation project(':lib_video')
+
 }
