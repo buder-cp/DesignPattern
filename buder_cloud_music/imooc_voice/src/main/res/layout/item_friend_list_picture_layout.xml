@@ -77,7 +77,7 @@
             android:textColor="#333333"
             android:textSize="14sp" />
 
-        <com.imooc.lib_commin_ui.MultiImageViewLayout
+        <com.example.lib_common_ui.MultiImageViewLayout
             android:id="@+id/image_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />

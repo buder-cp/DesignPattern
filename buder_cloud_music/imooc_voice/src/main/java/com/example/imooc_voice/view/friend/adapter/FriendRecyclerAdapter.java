@@ -6,6 +6,17 @@ import android.view.View;
 import android.widget.ImageView;
 
 
+import com.example.imooc_voice.R;
+import com.example.imooc_voice.view.friend.model.FriendBodyValue;
+import com.example.imooc_voice.view.login.LoginActivity;
+import com.example.imooc_voice.view.login.manager.UserManager;
+import com.example.lib_audio.app.AudioHelper;
+import com.example.lib_common_ui.MultiImageViewLayout;
+import com.example.lib_common_ui.recyclerview.MultiItemTypeAdapter;
+import com.example.lib_common_ui.recyclerview.base.ItemViewDelegate;
+import com.example.lib_common_ui.recyclerview.base.ViewHolder;
+import com.example.lib_image_loader.app.ImageLoaderManager;
+
 import java.util.List;
 
 public class FriendRecyclerAdapter extends MultiItemTypeAdapter {
@@ -71,5 +82,6 @@ public class FriendRecyclerAdapter extends MultiItemTypeAdapter {
         }
     }
 }
+
 
 

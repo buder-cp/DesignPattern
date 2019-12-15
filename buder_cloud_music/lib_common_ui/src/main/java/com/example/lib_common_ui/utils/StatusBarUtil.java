@@ -25,14 +25,14 @@ public class StatusBarUtil {
       Window window = activity.getWindow();
       window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
       window.getDecorView()
-          .setSystemUiVisibility(
-              View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+              .setSystemUiVisibility(
+                      View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
       window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
       window.setStatusBarColor(Color.TRANSPARENT);
     } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
       Window window = activity.getWindow();
       window.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
-          WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+              WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
     }
   }
 
@@ -51,9 +51,9 @@ public class StatusBarUtil {
         result = 2;
       } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
         activity.getWindow()
-            .getDecorView()
-            .setSystemUiVisibility(
-                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+                .getDecorView()
+                .setSystemUiVisibility(
+                        View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         result = 3;
       }
     }
@@ -72,9 +72,9 @@ public class StatusBarUtil {
       flymeSetStatusBarLightMode(activity.getWindow(), true);
     } else if (type == 3) {
       activity.getWindow()
-          .getDecorView()
-          .setSystemUiVisibility(
-              View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+              .getDecorView()
+              .setSystemUiVisibility(
+                      View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
     }
   }
 
@@ -105,7 +105,7 @@ public class StatusBarUtil {
       try {
         WindowManager.LayoutParams lp = window.getAttributes();
         Field darkFlag =
-            WindowManager.LayoutParams.class.getDeclaredField("MEIZU_FLAG_DARK_STATUS_BAR_ICON");
+                WindowManager.LayoutParams.class.getDeclaredField("MEIZU_FLAG_DARK_STATUS_BAR_ICON");
         Field meizuFlags = WindowManager.LayoutParams.class.getDeclaredField("meizuFlags");
         darkFlag.setAccessible(true);
         meizuFlags.setAccessible(true);
@@ -157,9 +157,9 @@ public class StatusBarUtil {
           //开发版 7.7.13 及以后版本采用了系统API，旧方法无效但不会报错，所以两个方式都要加上
           if (dark) {
             activity.getWindow()
-                .getDecorView()
-                .setSystemUiVisibility(
-                    View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+                    .getDecorView()
+                    .setSystemUiVisibility(
+                            View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
           } else {
             activity.getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
           }
@@ -180,7 +180,7 @@ public class StatusBarUtil {
     try {
       @SuppressWarnings("rawtypes") Class c = Class.forName("android.view.Display");
       @SuppressWarnings("unchecked") Method method =
-          c.getMethod("getRealMetrics", DisplayMetrics.class);
+              c.getMethod("getRealMetrics", DisplayMetrics.class);
       method.invoke(display, dm);
       vh = dm.heightPixels - display.getHeight();
     } catch (Exception e) {
