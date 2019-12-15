@@ -13,6 +13,7 @@
             <option value="$PROJECT_DIR$/lib_common_ui" />
             <option value="$PROJECT_DIR$/lib_image_loader" />
             <option value="$PROJECT_DIR$/lib_network" />
+            <option value="$PROJECT_DIR$/lib_pullalive" />
             <option value="$PROJECT_DIR$/lib_share" />
             <option value="$PROJECT_DIR$/lib_video" />
           </set>
