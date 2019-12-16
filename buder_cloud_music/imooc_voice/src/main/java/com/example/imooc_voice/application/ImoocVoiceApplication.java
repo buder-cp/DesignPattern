@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.example.lib_audio.app.AudioHelper;
 import com.example.lib_share.share.ShareManager;
+import com.example.lib_update.app.UpdateHelper;
 
 
 public class ImoocVoiceApplication extends Application {
@@ -18,6 +19,9 @@ public class ImoocVoiceApplication extends Application {
         AudioHelper.init(this);
         //分享组件初始化
         ShareManager.init(this);
+        //更新组件初始化
+        UpdateHelper.init(this);
+
     }
 
     public static ImoocVoiceApplication getInstance() {
