@@ -15,7 +15,7 @@ public class WrapperUtils {
   }
 
   public static void onAttachedToRecyclerView(RecyclerView.Adapter innerAdapter,
-      RecyclerView recyclerView, final SpanSizeCallback callback) {
+                                              RecyclerView recyclerView, final SpanSizeCallback callback) {
     innerAdapter.onAttachedToRecyclerView(recyclerView);
 
     RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
@@ -24,8 +24,7 @@ public class WrapperUtils {
       final GridLayoutManager.SpanSizeLookup spanSizeLookup = gridLayoutManager.getSpanSizeLookup();
 
       gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
-        @Override
-        public int getSpanSize(int position) {
+        @Override public int getSpanSize(int position) {
           return callback.getSpanSize(gridLayoutManager, spanSizeLookup, position);
         }
       });

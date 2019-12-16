@@ -21,9 +21,7 @@ public class MultiImageViewLayout extends LinearLayout {
     // 照片的Url列表
     private List<String> imagesList;
 
-    /**
-     * 长度 单位为Pixel
-     **/
+    /** 长度 单位为Pixel **/
     //private int pxOneMaxWandH;  // 单张图最大允许宽高
     private int pxMoreWandH = 0;// 多张图的宽高
     private int pxImagePadding = StatusBarUtil.dip2px(getContext(), 3);// 图片间的间距
@@ -63,8 +61,7 @@ public class MultiImageViewLayout extends LinearLayout {
         initView();
     }
 
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+    @Override protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         if (MAX_WIDTH == 0) {
             int width = measureWidth(widthMeasureSpec);
             if (width > 0) {
@@ -193,8 +190,7 @@ public class MultiImageViewLayout extends LinearLayout {
             this.position = position;
         }
 
-        @Override
-        public void onClick(View view) {
+        @Override public void onClick(View view) {
             if (mOnItemClickListener != null) {
                 mOnItemClickListener.onItemClick(view, position);
             }

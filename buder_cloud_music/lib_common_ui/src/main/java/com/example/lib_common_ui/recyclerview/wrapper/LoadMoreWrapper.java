@@ -29,16 +29,14 @@ public class LoadMoreWrapper<T> extends RecyclerView.Adapter<RecyclerView.ViewHo
     return hasLoadMore() && (position >= mInnerAdapter.getItemCount());
   }
 
-  @Override
-  public int getItemViewType(int position) {
+  @Override public int getItemViewType(int position) {
     if (isShowLoadMore(position)) {
       return ITEM_TYPE_LOAD_MORE;
     }
     return mInnerAdapter.getItemViewType(position);
   }
 
-  @Override
-  public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+  @Override public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
     if (viewType == ITEM_TYPE_LOAD_MORE) {
       ViewHolder holder;
       if (mLoadMoreView != null) {
@@ -51,8 +49,7 @@ public class LoadMoreWrapper<T> extends RecyclerView.Adapter<RecyclerView.ViewHo
     return mInnerAdapter.onCreateViewHolder(parent, viewType);
   }
 
-  @Override
-  public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+  @Override public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
     if (isShowLoadMore(position)) {
       if (mOnLoadMoreListener != null) {
         mOnLoadMoreListener.onLoadMoreRequested();
@@ -62,26 +59,23 @@ public class LoadMoreWrapper<T> extends RecyclerView.Adapter<RecyclerView.ViewHo
     mInnerAdapter.onBindViewHolder(holder, position);
   }
 
-  @Override
-  public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+  @Override public void onAttachedToRecyclerView(RecyclerView recyclerView) {
     WrapperUtils.onAttachedToRecyclerView(mInnerAdapter, recyclerView,
-        new WrapperUtils.SpanSizeCallback() {
-          @Override
-          public int getSpanSize(GridLayoutManager layoutManager,
-                                 GridLayoutManager.SpanSizeLookup oldLookup, int position) {
-            if (isShowLoadMore(position)) {
-              return layoutManager.getSpanCount();
-            }
-            if (oldLookup != null) {
-              return oldLookup.getSpanSize(position);
-            }
-            return 1;
-          }
-        });
+            new WrapperUtils.SpanSizeCallback() {
+              @Override public int getSpanSize(GridLayoutManager layoutManager,
+                                               GridLayoutManager.SpanSizeLookup oldLookup, int position) {
+                if (isShowLoadMore(position)) {
+                  return layoutManager.getSpanCount();
+                }
+                if (oldLookup != null) {
+                  return oldLookup.getSpanSize(position);
+                }
+                return 1;
+              }
+            });
   }
 
-  @Override
-  public void onViewAttachedToWindow(RecyclerView.ViewHolder holder) {
+  @Override public void onViewAttachedToWindow(RecyclerView.ViewHolder holder) {
     mInnerAdapter.onViewAttachedToWindow(holder);
 
     if (isShowLoadMore(holder.getLayoutPosition())) {
@@ -99,8 +93,7 @@ public class LoadMoreWrapper<T> extends RecyclerView.Adapter<RecyclerView.ViewHo
     }
   }
 
-  @Override
-  public int getItemCount() {
+  @Override public int getItemCount() {
     return mInnerAdapter.getItemCount() + (hasLoadMore() ? 1 : 0);
   }
 

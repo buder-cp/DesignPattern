@@ -64,8 +64,8 @@ public class VerticalItemView extends RelativeLayout {
         a.recycle();
 
         //居中添加到布局中
-        LayoutParams params =
-                new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+        RelativeLayout.LayoutParams params =
+                new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
         params.addRule(CENTER_IN_PARENT);
         addView(createItemView(), params);
     }
@@ -78,8 +78,8 @@ public class VerticalItemView extends RelativeLayout {
         mIconView = new ImageView(mContext);
         mIconView.setImageDrawable(mIcon);
         mIconView.setId(R.id.vertical_image_id);
-        LayoutParams iconParams =
-                new LayoutParams(mIconWidth, mIconHeight);
+        RelativeLayout.LayoutParams iconParams =
+                new RelativeLayout.LayoutParams(mIconWidth, mIconHeight);
         iconParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
         rootLayout.addView(mIconView, iconParams);
 
@@ -88,8 +88,8 @@ public class VerticalItemView extends RelativeLayout {
         mInfoView.setTextColor(mInfoTextColor);
         mInfoView.getPaint().setTextSize(mInfoTextSize);
         mInfoView.setText(mInfoText);
-        LayoutParams textParams =
-                new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+        RelativeLayout.LayoutParams textParams =
+                new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
         textParams.setMargins(0, mInfoTextMarginTop, 0, 0);
         textParams.addRule(RelativeLayout.BELOW, R.id.vertical_image_id);
         textParams.addRule(RelativeLayout.CENTER_HORIZONTAL);

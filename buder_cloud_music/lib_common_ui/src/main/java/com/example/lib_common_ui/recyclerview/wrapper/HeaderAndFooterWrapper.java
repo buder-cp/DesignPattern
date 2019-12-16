@@ -22,22 +22,20 @@ public class HeaderAndFooterWrapper<T> extends RecyclerView.Adapter<RecyclerView
     mInnerAdapter = adapter;
   }
 
-  @Override
-  public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+  @Override public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
     if (mHeaderViews.get(viewType) != null) {
       ViewHolder holder =
-          ViewHolder.createViewHolder(parent.getContext(), mHeaderViews.get(viewType));
+              ViewHolder.createViewHolder(parent.getContext(), mHeaderViews.get(viewType));
       return holder;
     } else if (mFootViews.get(viewType) != null) {
       ViewHolder holder =
-          ViewHolder.createViewHolder(parent.getContext(), mFootViews.get(viewType));
+              ViewHolder.createViewHolder(parent.getContext(), mFootViews.get(viewType));
       return holder;
     }
     return mInnerAdapter.onCreateViewHolder(parent, viewType);
   }
 
-  @Override
-  public int getItemViewType(int position) {
+  @Override public int getItemViewType(int position) {
     if (isHeaderViewPos(position)) {
       return mHeaderViews.keyAt(position);
     } else if (isFooterViewPos(position)) {
@@ -50,8 +48,7 @@ public class HeaderAndFooterWrapper<T> extends RecyclerView.Adapter<RecyclerView
     return mInnerAdapter.getItemCount();
   }
 
-  @Override
-  public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+  @Override public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
     if (isHeaderViewPos(position)) {
       return;
     }
@@ -61,32 +58,28 @@ public class HeaderAndFooterWrapper<T> extends RecyclerView.Adapter<RecyclerView
     mInnerAdapter.onBindViewHolder(holder, position - getHeadersCount());
   }
 
-  @Override
-  public int getItemCount() {
+  @Override public int getItemCount() {
     return getHeadersCount() + getFootersCount() + getRealItemCount();
   }
 
-  @Override
-  public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+  @Override public void onAttachedToRecyclerView(RecyclerView recyclerView) {
     WrapperUtils.onAttachedToRecyclerView(mInnerAdapter, recyclerView,
-        new WrapperUtils.SpanSizeCallback() {
-          @Override
-          public int getSpanSize(GridLayoutManager layoutManager,
-                                 GridLayoutManager.SpanSizeLookup oldLookup, int position) {
-            int viewType = getItemViewType(position);
-            if (mHeaderViews.get(viewType) != null) {
-              return layoutManager.getSpanCount();
-            } else if (mFootViews.get(viewType) != null) {
-              return layoutManager.getSpanCount();
-            }
-            if (oldLookup != null) return oldLookup.getSpanSize(position);
-            return 1;
-          }
-        });
+            new WrapperUtils.SpanSizeCallback() {
+              @Override public int getSpanSize(GridLayoutManager layoutManager,
+                                               GridLayoutManager.SpanSizeLookup oldLookup, int position) {
+                int viewType = getItemViewType(position);
+                if (mHeaderViews.get(viewType) != null) {
+                  return layoutManager.getSpanCount();
+                } else if (mFootViews.get(viewType) != null) {
+                  return layoutManager.getSpanCount();
+                }
+                if (oldLookup != null) return oldLookup.getSpanSize(position);
+                return 1;
+              }
+            });
   }
 
-  @Override
-  public void onViewAttachedToWindow(RecyclerView.ViewHolder holder) {
+  @Override public void onViewAttachedToWindow(RecyclerView.ViewHolder holder) {
     mInnerAdapter.onViewAttachedToWindow(holder);
     int position = holder.getLayoutPosition();
     if (isHeaderViewPos(position) || isFooterViewPos(position)) {

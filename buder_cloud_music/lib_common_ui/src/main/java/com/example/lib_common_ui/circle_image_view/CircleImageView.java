@@ -47,8 +47,7 @@ import android.widget.ImageView;
 import com.example.lib_common_ui.R;
 
 
-@SuppressWarnings("UnusedDeclaration")
-public class CircleImageView extends ImageView {
+@SuppressWarnings("UnusedDeclaration") public class CircleImageView extends ImageView {
 
     private static final ScaleType SCALE_TYPE = ScaleType.CENTER_CROP;
 
@@ -129,27 +128,23 @@ public class CircleImageView extends ImageView {
         }
     }
 
-    @Override
-    public ScaleType getScaleType() {
+    @Override public ScaleType getScaleType() {
         return SCALE_TYPE;
     }
 
-    @Override
-    public void setScaleType(ScaleType scaleType) {
+    @Override public void setScaleType(ScaleType scaleType) {
         if (scaleType != SCALE_TYPE) {
             throw new IllegalArgumentException(String.format("ScaleType %s not supported.", scaleType));
         }
     }
 
-    @Override
-    public void setAdjustViewBounds(boolean adjustViewBounds) {
+    @Override public void setAdjustViewBounds(boolean adjustViewBounds) {
         if (adjustViewBounds) {
             throw new IllegalArgumentException("adjustViewBounds not supported.");
         }
     }
 
-    @Override
-    protected void onDraw(Canvas canvas) {
+    @Override protected void onDraw(Canvas canvas) {
         if (mDisableCircularTransformation) {
             super.onDraw(canvas);
             return;
@@ -170,20 +165,17 @@ public class CircleImageView extends ImageView {
         }
     }
 
-    @Override
-    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+    @Override protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
         setup();
     }
 
-    @Override
-    public void setPadding(int left, int top, int right, int bottom) {
+    @Override public void setPadding(int left, int top, int right, int bottom) {
         super.setPadding(left, top, right, bottom);
         setup();
     }
 
-    @Override
-    public void setPaddingRelative(int start, int top, int end, int bottom) {
+    @Override public void setPaddingRelative(int start, int top, int end, int bottom) {
         super.setPaddingRelative(start, top, end, bottom);
         setup();
     }
@@ -259,32 +251,27 @@ public class CircleImageView extends ImageView {
         initializeBitmap();
     }
 
-    @Override
-    public void setImageBitmap(Bitmap bm) {
+    @Override public void setImageBitmap(Bitmap bm) {
         super.setImageBitmap(bm);
         initializeBitmap();
     }
 
-    @Override
-    public void setImageDrawable(Drawable drawable) {
+    @Override public void setImageDrawable(Drawable drawable) {
         super.setImageDrawable(drawable);
         initializeBitmap();
     }
 
-    @Override
-    public void setImageResource(@DrawableRes int resId) {
+    @Override public void setImageResource(@DrawableRes int resId) {
         super.setImageResource(resId);
         initializeBitmap();
     }
 
-    @Override
-    public void setImageURI(Uri uri) {
+    @Override public void setImageURI(Uri uri) {
         super.setImageURI(uri);
         initializeBitmap();
     }
 
-    @Override
-    public void setColorFilter(ColorFilter cf) {
+    @Override public void setColorFilter(ColorFilter cf) {
         if (cf == mColorFilter) {
             return;
         }
@@ -294,8 +281,7 @@ public class CircleImageView extends ImageView {
         invalidate();
     }
 
-    @Override
-    public ColorFilter getColorFilter() {
+    @Override public ColorFilter getColorFilter() {
         return mColorFilter;
     }
 
@@ -423,8 +409,7 @@ public class CircleImageView extends ImageView {
         mBitmapShader.setLocalMatrix(mShaderMatrix);
     }
 
-    @SuppressLint("ClickableViewAccessibility")
-    @Override
+    @SuppressLint("ClickableViewAccessibility") @Override
     public boolean onTouchEvent(MotionEvent event) {
         return inTouchableArea(event.getX(), event.getY()) && super.onTouchEvent(event);
     }
@@ -434,12 +419,10 @@ public class CircleImageView extends ImageView {
                 <= Math.pow(mBorderRadius, 2);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    private class OutlineProvider
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP) private class OutlineProvider
             extends ViewOutlineProvider {
 
-        @Override
-        public void getOutline(View view, Outline outline) {
+        @Override public void getOutline(View view, Outline outline) {
             Rect bounds = new Rect();
             mBorderRect.roundOut(bounds);
             outline.setRoundRect(bounds, bounds.width() / 2.0f);

@@ -22,18 +22,15 @@ public abstract class CommonAdapter<T> extends MultiItemTypeAdapter<T> {
     mDatas = datas;
 
     addItemViewDelegate(new ItemViewDelegate<T>() {
-      @Override
-      public int getItemViewLayoutId() {
+      @Override public int getItemViewLayoutId() {
         return layoutId;
       }
 
-      @Override
-      public boolean isForViewType(T item, int position) {
+      @Override public boolean isForViewType(T item, int position) {
         return true;
       }
 
-      @Override
-      public void convert(ViewHolder holder, T t, int position) {
+      @Override public void convert(ViewHolder holder, T t, int position) {
         CommonAdapter.this.convert(holder, t, position);
       }
     });
@@ -41,3 +38,4 @@ public abstract class CommonAdapter<T> extends MultiItemTypeAdapter<T> {
 
   protected abstract void convert(ViewHolder holder, T t, int position);
 }
+

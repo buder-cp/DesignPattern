@@ -13,8 +13,8 @@ import com.example.lib_common_ui.utils.StatusBarUtil;
 
 
 public class BaseActivity extends FragmentActivity {
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+
+    @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         StatusBarUtil.statusBarLightMode(this);
     }
@@ -39,9 +39,8 @@ public class BaseActivity extends FragmentActivity {
         return true;
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                                           int[] grantResults) {
+    @Override public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                                                     int[] grantResults) {
         switch (requestCode) {
             case Constant.WRITE_READ_EXTERNAL_CODE:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
