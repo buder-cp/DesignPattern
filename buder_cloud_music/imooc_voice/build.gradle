@@ -50,5 +50,7 @@ dependencies {
     implementation project(':lib_share')
     implementation project(':lib_pullalive')
     implementation project(':lib_video')
+    implementation project(':lib_webview')
+    implementation project(':lib_update')
 
 }

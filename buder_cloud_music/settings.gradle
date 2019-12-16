@@ -1,1 +1,1 @@
-include ':imooc_voice', ':lib_audio', ':lib_video', ':lib_common_ui', ':lib_network', ':lib_image_loader', ':lib_share', ':lib_pullalive', ':lib_webview'
+include ':imooc_voice', ':lib_audio', ':lib_video', ':lib_common_ui', ':lib_network', ':lib_image_loader', ':lib_share', ':lib_pullalive', ':lib_webview', ':lib_update'
