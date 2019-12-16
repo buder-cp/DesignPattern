@@ -16,6 +16,7 @@
             <option value="$PROJECT_DIR$/lib_pullalive" />
             <option value="$PROJECT_DIR$/lib_share" />
             <option value="$PROJECT_DIR$/lib_video" />
+            <option value="$PROJECT_DIR$/lib_webview" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
