@@ -6,8 +6,8 @@ import com.example.imooc_voice.view.login.user.User;
 import com.example.lib_network.okhttp.CommonOkHttpClient;
 import com.example.lib_network.okhttp.request.CommonRequest;
 import com.example.lib_network.okhttp.request.RequestParams;
-import com.example.lib_network.okhttp.response.listener.DisposeDataHandle;
-import com.example.lib_network.okhttp.response.listener.DisposeDataListener;
+import com.example.lib_network.okhttp.listener.DisposeDataHandle;
+import com.example.lib_network.okhttp.listener.DisposeDataListener;
 
 /**
  * 请求中心

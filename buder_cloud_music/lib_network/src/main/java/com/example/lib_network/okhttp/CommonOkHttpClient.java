@@ -1,8 +1,10 @@
 package com.example.lib_network.okhttp;
 
+import com.example.lib_network.okhttp.cookie.SimpleCookieJar;
+import com.example.lib_network.okhttp.https.HttpsUtils;
 import com.example.lib_network.okhttp.response.CommonFileCallback;
 import com.example.lib_network.okhttp.response.CommonJsonCallback;
-import com.example.lib_network.okhttp.response.listener.DisposeDataHandle;
+import com.example.lib_network.okhttp.listener.DisposeDataHandle;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
@@ -19,39 +21,55 @@ import okhttp3.Response;
 /**
  * 用来发送get, post请求的工具类，包括设置一些请求的共用参数
  */
+/**
+ * @author qndroid
+ * @function 用来发送get, post请求的工具类，包括设置一些请求的共用参数
+ */
 public class CommonOkHttpClient {
-
     private static final int TIME_OUT = 30;
     private static OkHttpClient mOkHttpClient;
 
-    //完成对okhttpClient的初始化
     static {
-        OkHttpClient.Builder okhttpClientBuilder = new OkHttpClient.Builder();
-        okhttpClientBuilder.hostnameVerifier(new HostnameVerifier() {
+        OkHttpClient.Builder okHttpClientBuilder = new OkHttpClient.Builder();
+        okHttpClientBuilder.hostnameVerifier(new HostnameVerifier() {
             @Override
             public boolean verify(String hostname, SSLSession session) {
                 return true;
             }
         });
+
         /**
-         * 添加公共请求头
+         *  为所有请求添加请求头，看个人需求
          */
-        okhttpClientBuilder.addInterceptor(new Interceptor() {
+        okHttpClientBuilder.addInterceptor(new Interceptor() {
             @Override
             public Response intercept(Chain chain) throws IOException {
-                Request request = chain.request().newBuilder().addHeader("User-Agent", "Imooc-Mobile").build();
+                Request request =
+                        chain.request().newBuilder().addHeader("User-Agent", "Imooc-Mobile") // 标明发送本次请求的客户端
+                                .build();
                 return chain.proceed(request);
             }
         });
-        okhttpClientBuilder.connectTimeout(TIME_OUT, TimeUnit.SECONDS);
-        okhttpClientBuilder.readTimeout(TIME_OUT, TimeUnit.SECONDS);
-        okhttpClientBuilder.writeTimeout(TIME_OUT, TimeUnit.SECONDS);
-        okhttpClientBuilder.followRedirects(true);
-        mOkHttpClient = okhttpClientBuilder.build();
+        okHttpClientBuilder.cookieJar(new SimpleCookieJar());
+        okHttpClientBuilder.connectTimeout(TIME_OUT, TimeUnit.SECONDS);
+        okHttpClientBuilder.readTimeout(TIME_OUT, TimeUnit.SECONDS);
+        okHttpClientBuilder.writeTimeout(TIME_OUT, TimeUnit.SECONDS);
+        okHttpClientBuilder.followRedirects(true);
+        /**
+         * trust all the https point
+         */
+        okHttpClientBuilder.sslSocketFactory(HttpsUtils.initSSLSocketFactory(),
+                HttpsUtils.initTrustManager());
+        mOkHttpClient = okHttpClientBuilder.build();
     }
 
+    public static OkHttpClient getOkHttpClient() {
+        return mOkHttpClient;
+    }
+
+
     /**
-     * get请求
+     * 通过构造好的Request,Callback去发送请求
      */
     public static Call get(Request request, DisposeDataHandle handle) {
         Call call = mOkHttpClient.newCall(request);
@@ -59,23 +77,13 @@ public class CommonOkHttpClient {
         return call;
     }
 
-    /**
-     * post请求
-     *
-     * @return
-     */
     public static Call post(Request request, DisposeDataHandle handle) {
         Call call = mOkHttpClient.newCall(request);
         call.enqueue(new CommonJsonCallback(handle));
         return call;
     }
 
-    /**
-     * 文件下载请求
-     *
-     * @return
-     */
-    public static Call downoadFile(Request request, DisposeDataHandle handle) {
+    public static Call downloadFile(Request request, DisposeDataHandle handle) {
         Call call = mOkHttpClient.newCall(request);
         call.enqueue(new CommonFileCallback(handle));
         return call;

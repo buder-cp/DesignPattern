@@ -12,6 +12,13 @@ import java.util.ArrayList;
 /**********************************************************
  * @文件描述：递归ORM映射(有反射，不能被混淆)
  **********************/
+/**********************************************************
+ * @文件名称：ResponseEntityToModule.java
+ * @文件作者：qndroid
+ * @创建时间：2015年7月31日 上午10:51:44
+ * @文件描述：递归ORM映射(有反射，不能被混淆)
+ * @修改历史：2015年7月31日创建初始版本
+ **********************************************************/
 public class ResponseEntityToModule {
 
   public static Object parseJsonToModule(String jsonContent, Class<?> clazz) {
@@ -45,7 +52,7 @@ public class ResponseEntityToModule {
   }
 
   private static void setFieldValue(Object moduleObj, JSONObject jsonObj, Class<?> clazz)
-      throws IllegalArgumentException, IllegalAccessException, JSONException,
+          throws IllegalArgumentException, IllegalAccessException, JSONException,
           InstantiationException {
     if (clazz.getSuperclass() != null) {
       setFieldValue(moduleObj, jsonObj, clazz.getSuperclass());
@@ -61,7 +68,7 @@ public class ResponseEntityToModule {
         continue;
       }
       if (cls.isPrimitive() || isWrappedPrimitive(
-          cls))// 锟斤拷锟斤拷腔锟斤拷锟斤拷锟斤拷锟絙oolean,byte,char,short,int,long,float,double,void
+              cls))// 锟斤拷锟斤拷腔锟斤拷锟斤拷锟斤拷锟絙oolean,byte,char,short,int,long,float,double,void
       {
         setPrimitiveFieldValue(f, moduleObj, jsonObj.get(name));
       } else {
@@ -71,7 +78,7 @@ public class ResponseEntityToModule {
           parseJsonArrayToList(f, name, moduleObj, jsonObj);
         } else {
           Object obj =
-              parseJsonObjectToModule(jsonObj.getJSONObject(name), cls.newInstance().getClass());
+                  parseJsonObjectToModule(jsonObj.getJSONObject(name), cls.newInstance().getClass());
           f.set(moduleObj, obj);
         }
       }
@@ -80,7 +87,7 @@ public class ResponseEntityToModule {
 
   private static ArrayList<Object> parseJsonArrayToList(Field field, String fieldName,
                                                         Object moduleObj, JSONObject jsonObj)
-      throws JSONException, IllegalArgumentException, IllegalAccessException {
+          throws JSONException, IllegalArgumentException, IllegalAccessException {
     ArrayList<Object> objList = new ArrayList<Object>();
     Type fc = field.getGenericType();
     if (fc instanceof ParameterizedType)// 锟角凤拷锟斤拷
@@ -109,7 +116,7 @@ public class ResponseEntityToModule {
   }
 
   private static void setPrimitiveFieldValue(Field field, Object moduleObj, Object jsonObj)
-      throws IllegalArgumentException, IllegalAccessException {
+          throws IllegalArgumentException, IllegalAccessException {
     if (field.getType().isAssignableFrom(jsonObj.getClass())) {
       field.set(moduleObj, jsonObj);
     } else {
@@ -118,7 +125,7 @@ public class ResponseEntityToModule {
   }
 
   private static final Object makeTypeSafeValue(Class<?> type, String value)
-      throws NumberFormatException, IllegalArgumentException {
+          throws NumberFormatException, IllegalArgumentException {
     if (int.class == type || Integer.class == type) {
       return Integer.parseInt(value);
     } else if (long.class == type || Long.class == type) {
@@ -142,14 +149,14 @@ public class ResponseEntityToModule {
 
   private static boolean isWrappedPrimitive(Class<?> type) {
     if (type.getName().equals(Boolean.class.getName())
-        || type.getName()
-        .equals(Byte.class.getName())
-        || type.getName().equals(Character.class.getName())
-        || type.getName().equals(Short.class.getName())
-        || type.getName().equals(Integer.class.getName())
-        || type.getName().equals(Long.class.getName())
-        || type.getName().equals(Float.class.getName())
-        || type.getName().equals(Double.class.getName())) {
+            || type.getName()
+            .equals(Byte.class.getName())
+            || type.getName().equals(Character.class.getName())
+            || type.getName().equals(Short.class.getName())
+            || type.getName().equals(Integer.class.getName())
+            || type.getName().equals(Long.class.getName())
+            || type.getName().equals(Float.class.getName())
+            || type.getName().equals(Double.class.getName())) {
       return true;
     }
     return false;

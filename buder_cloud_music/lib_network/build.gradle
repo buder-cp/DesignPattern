@@ -3,6 +3,9 @@ apply plugin: 'com.android.library'
 android {
     compileSdkVersion this.rootProject.android.compileSdkVersion
 
+    dexOptions {
+        jumboMode = true
+    }
 
 
     defaultConfig {

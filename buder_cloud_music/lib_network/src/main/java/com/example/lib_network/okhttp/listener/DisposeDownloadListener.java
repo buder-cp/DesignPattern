@@ -1,4 +1,4 @@
-package com.example.lib_network.okhttp.response.listener;
+package com.example.lib_network.okhttp.listener;
 
 /**
  * @author vision

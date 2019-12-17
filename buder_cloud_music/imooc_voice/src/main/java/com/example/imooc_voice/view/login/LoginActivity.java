@@ -14,7 +14,7 @@ import com.example.imooc_voice.view.login.manager.UserManager;
 import com.example.imooc_voice.view.login.user.LoginEvent;
 import com.example.imooc_voice.view.login.user.User;
 import com.example.lib_common_ui.base.BaseActivity;
-import com.example.lib_network.okhttp.response.listener.DisposeDataListener;
+import com.example.lib_network.okhttp.listener.DisposeDataListener;
 import com.example.lib_network.okhttp.utils.ResponseEntityToModule;
 
 import org.greenrobot.eventbus.EventBus;

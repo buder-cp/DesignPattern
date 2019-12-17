@@ -4,9 +4,11 @@ import android.os.Handler;
 import android.os.Looper;
 
 import com.example.lib_network.okhttp.exception.OkHttpException;
-import com.example.lib_network.okhttp.response.listener.DisposeDataHandle;
-import com.example.lib_network.okhttp.response.listener.DisposeDataListener;
+import com.example.lib_network.okhttp.listener.DisposeDataHandle;
+import com.example.lib_network.okhttp.listener.DisposeDataListener;
 import com.example.lib_network.okhttp.utils.ResponseEntityToModule;
+
+import org.json.JSONObject;
 
 import java.io.IOException;
 
@@ -17,8 +19,18 @@ import okhttp3.Response;
 /**
  * 处理json类型的响应
  */
+/**
+ * @author vision
+ * @function 专门处理JSON的回调
+ */
 public class CommonJsonCallback implements Callback {
 
+    /**
+     * the logic layer exception, may alter in different app
+     */
+    protected final String RESULT_CODE = "ecode"; // 有返回则对于http请求来说是成功的，但还有可能是业务逻辑上的错误
+    protected final int RESULT_CODE_VALUE = 0;
+    protected final String ERROR_MSG = "emsg";
     protected final String EMPTY_MSG = "";
 
     /**
@@ -28,28 +40,34 @@ public class CommonJsonCallback implements Callback {
     protected final int JSON_ERROR = -2; // the JSON relative error
     protected final int OTHER_ERROR = -3; // the unknow error
 
+    /**
+     * 将其它线程的数据转发到UI线程
+     */
+    private Handler mDeliveryHandler;
     private DisposeDataListener mListener;
     private Class<?> mClass;
-    private Handler mDeliveryHandler;
 
     public CommonJsonCallback(DisposeDataHandle handle) {
-        mListener = handle.mListener;
-        mClass = handle.mClass;
-        mDeliveryHandler = new Handler(Looper.getMainLooper());
+        this.mListener = handle.mListener;
+        this.mClass = handle.mClass;
+        this.mDeliveryHandler = new Handler(Looper.getMainLooper());
     }
 
     @Override
-    public void onFailure(Call call, final IOException e) {
+    public void onFailure(final Call call, final IOException ioexception) {
+        /**
+         * 此时还在非UI线程，因此要转发
+         */
         mDeliveryHandler.post(new Runnable() {
             @Override
             public void run() {
-                mListener.onFailure(new OkHttpException(NETWORK_ERROR, e));
+                mListener.onFailure(new OkHttpException(NETWORK_ERROR, ioexception));
             }
         });
     }
 
     @Override
-    public void onResponse(Call call, Response response) throws IOException {
+    public void onResponse(final Call call, final Response response) throws IOException {
         final String result = response.body().string();
         mDeliveryHandler.post(new Runnable() {
             @Override
@@ -59,19 +77,21 @@ public class CommonJsonCallback implements Callback {
         });
     }
 
-    private void handleResponse(String result) {
-        if (result == null || result.trim().equals("")) {
+    private void handleResponse(Object responseObj) {
+        if (responseObj == null || responseObj.toString().trim().equals("")) {
             mListener.onFailure(new OkHttpException(NETWORK_ERROR, EMPTY_MSG));
             return;
         }
 
         try {
-            //不需要解析
+            /**
+             * 协议确定后看这里如何修改
+             */
+            JSONObject result = new JSONObject(responseObj.toString());
             if (mClass == null) {
                 mListener.onSuccess(result);
             } else {
-                //解析为实体对象，可用gson，fastjson替换
-                Object obj = ResponseEntityToModule.parseJsonToModule(result, mClass);
+                Object obj = ResponseEntityToModule.parseJsonObjectToModule(result, mClass);
                 if (obj != null) {
                     mListener.onSuccess(obj);
                 } else {
@@ -79,7 +99,8 @@ public class CommonJsonCallback implements Callback {
                 }
             }
         } catch (Exception e) {
-            mListener.onFailure(new OkHttpException(OTHER_ERROR, e));
+            mListener.onFailure(new OkHttpException(OTHER_ERROR, e.getMessage()));
+            e.printStackTrace();
         }
     }
 }

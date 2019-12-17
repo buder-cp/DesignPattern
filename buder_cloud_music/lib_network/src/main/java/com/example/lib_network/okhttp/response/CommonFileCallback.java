@@ -6,8 +6,8 @@ import android.os.Message;
 
 
 import com.example.lib_network.okhttp.exception.OkHttpException;
-import com.example.lib_network.okhttp.response.listener.DisposeDataHandle;
-import com.example.lib_network.okhttp.response.listener.DisposeDownloadListener;
+import com.example.lib_network.okhttp.listener.DisposeDataHandle;
+import com.example.lib_network.okhttp.listener.DisposeDownloadListener;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -20,6 +20,9 @@ import okhttp3.Response;
 
 /**
  * 处理文件类型的响应
+ */
+/**
+ * @文件描述：专门处理文件下载回调
  */
 public class CommonFileCallback implements Callback {
     /**
@@ -50,15 +53,14 @@ public class CommonFileCallback implements Callback {
                 }
             }
         };
-
     }
 
     @Override
-    public void onFailure(Call call, final IOException e) {
+    public void onFailure(final Call call, final IOException ioexception) {
         mDeliveryHandler.post(new Runnable() {
             @Override
             public void run() {
-                mListener.onFailure(new OkHttpException(NETWORK_ERROR, e));
+                mListener.onFailure(new OkHttpException(NETWORK_ERROR, ioexception));
             }
         });
     }
@@ -78,14 +80,19 @@ public class CommonFileCallback implements Callback {
         });
     }
 
-
+    /**
+     * 此时还在子线程中，不则调用回调接口
+     *
+     * @param response
+     * @return
+     */
     private File handleResponse(Response response) {
         if (response == null) {
             return null;
         }
 
         InputStream inputStream = null;
-        File file;
+        File file = null;
         FileOutputStream fos = null;
         byte[] buffer = new byte[2048];
         int length;
@@ -117,7 +124,7 @@ public class CommonFileCallback implements Callback {
                     inputStream.close();
                 }
             } catch (IOException e) {
-                file = null;
+                e.printStackTrace();
             }
         }
         return file;
