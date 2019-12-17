@@ -301,7 +301,7 @@ public class MusicPlayerActivity extends BaseActivity {
      * 分享音乐给好友
      */
     private void shareMusic(String url, String name) {
-        ShareDialog dialog = new ShareDialog(this);
+        ShareDialog dialog = new ShareDialog(this, false);
         dialog.setShareType(5);
         dialog.setShareTitle(name);
         dialog.setShareTitleUrl(url);

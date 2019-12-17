@@ -48,10 +48,13 @@ public class ShareDialog extends Dialog {
     private String mUrl;
     private String mResourceUrl;
 
-    public ShareDialog(Context context) {
+    private boolean isShowDownload;
+
+    public ShareDialog(Context context, boolean isShowDownload) {
         super(context, R.style.SheetDialogStyle);
         mContext = context;
         dm = mContext.getResources().getDisplayMetrics();
+        this.isShowDownload = false;
     }
 
     @Override
@@ -76,28 +79,28 @@ public class ShareDialog extends Dialog {
         mWeixinLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                shareData(ShareManager.PlatformType.WeChat);
+                shareData(ShareManager.PlatofrmType.WeChat);
             }
         });
         mWeixinMomentLayout = findViewById(R.id.moment_layout);
         mWeixinMomentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                shareData(ShareManager.PlatformType.WechatMoments);
+                shareData(ShareManager.PlatofrmType.WechatMoments);
             }
         });
         mQQLayout = findViewById(R.id.qq_layout);
         mQQLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                shareData(ShareManager.PlatformType.QQ);
+                shareData(ShareManager.PlatofrmType.QQ);
             }
         });
         mQZoneLayout = findViewById(R.id.qzone_layout);
         mQZoneLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                shareData(ShareManager.PlatformType.QZone);
+                shareData(ShareManager.PlatofrmType.QZone);
             }
         });
     }
@@ -152,7 +155,7 @@ public class ShareDialog extends Dialog {
         }
     };
 
-    private void shareData(ShareManager.PlatformType platofrm) {
+    private void shareData(ShareManager.PlatofrmType platofrm) {
         ShareData mData = new ShareData();
         Platform.ShareParams params = new Platform.ShareParams();
         params.setShareType(mShareType);

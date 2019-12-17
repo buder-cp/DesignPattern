@@ -18,7 +18,7 @@ public class ImoocVoiceApplication extends Application {
         //音频SDK初始化
         AudioHelper.init(this);
         //分享组件初始化
-        ShareManager.init(this);
+        ShareManager.initSDK(this);
         //更新组件初始化
         UpdateHelper.init(this);
 

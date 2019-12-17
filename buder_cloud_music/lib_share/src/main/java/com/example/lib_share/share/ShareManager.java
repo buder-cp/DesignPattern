@@ -12,26 +12,40 @@ import cn.sharesdk.wechat.moments.WechatMoments;
 
 
 /**
- * @author vision
  * @function 分享功能统一入口，负责发送数据到指定平台,可以优化为一个单例模式
  */
 
 public class ShareManager {
 
-    private static ShareManager mShareManager = new ShareManager();
+    private static ShareManager mShareManager = null;
     /**
      * 要分享到的平台
      */
     private Platform mCurrentPlatform;
 
+    /**
+     * 线程安全的单例模式
+     */
     public static ShareManager getInstance() {
+        if (mShareManager == null) {
+            synchronized (ShareManager.class) {
+                if (mShareManager == null) {
+                    mShareManager = new ShareManager();
+                }
+            }
+        }
         return mShareManager;
+    }
+
+    private ShareManager() {
     }
 
     /**
      * 第一个执行的方法,最好在程序入口入执行
+     *
+     * @param context
      */
-    public static void init(Context context) {
+    public static void initSDK(Context context) {
         ShareSDK.initSDK(context);
     }
 
@@ -60,9 +74,9 @@ public class ShareManager {
     }
 
     /**
-     * 应用程序需要的平台
+     * @author 应用程序需要的平台
      */
-    public enum PlatformType {
+    public enum PlatofrmType {
         QQ, QZone, WeChat, WechatMoments;
     }
 }

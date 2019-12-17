@@ -52,5 +52,6 @@ dependencies {
     implementation project(':lib_video')
     implementation project(':lib_webview')
     implementation project(':lib_update')
+    implementation project(':lib_qrcode')
 
 }

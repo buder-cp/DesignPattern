@@ -29,32 +29,28 @@ import com.example.lib_webview.utils.Utils;
  */
 @Route(path = "/webview/web_activity")
 public final class AdBrowserActivity extends Activity {
-    /**
-     * 常量区
-     */
+
+    private static final String LOG_TAG = AdBrowserActivity.class.getSimpleName();
+
     public static final String KEY_URL = "url";
-    /**
-     * UI
-     */
+
     private BrowserWebView mAdBrowserWebview;
     private AdBrowserLayout mLayout;
+
+    private boolean mIsBackFromMarket = false;
+
     private View mProgress;
     private Button mBackButton;
-    private Base64Drawables mBase64Drawables = new Base64Drawables();
 
-    /**
-     * Data
-     */
-    @Autowired(name = KEY_URL)
-    protected String mUrl;
-    private boolean mIsBackFromMarket = false;
+    private String mUrl;
+
     private AdBrowserWebViewClient.Listener mWebClientListener;
+
+    private Base64Drawables mBase64Drawables = new Base64Drawables();
 
     @Override
     public final void onCreate(Bundle bundle) {
         super.onCreate(bundle);
-        //添加到arouter中
-        ARouter.getInstance().inject(this);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);

@@ -11,7 +11,7 @@ public class ShareData {
     /**
      * 要分享到的平台
      */
-    public ShareManager.PlatformType mPlatformType;
+    public ShareManager.PlatofrmType mPlatformType;
 
     /**
      * 要分享到的平台的参数
