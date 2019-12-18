@@ -27,8 +27,7 @@ import java.util.ArrayList;
 /**
  * 音乐播放页面唱针布局
  */
-public class IndictorView extends RelativeLayout
-        implements ViewPager.OnPageChangeListener {
+public class IndictorView extends RelativeLayout implements ViewPager.OnPageChangeListener {
 
     private Context mContext;
 
@@ -37,7 +36,7 @@ public class IndictorView extends RelativeLayout
      */
     private ImageView mImageView;
     private ViewPager mViewPager;
-    private MusicPagerAdapter mAdapter;
+    private MusicPagerAdapter mMusicPagerAdapter;
     /*
      * data
      */
@@ -59,8 +58,7 @@ public class IndictorView extends RelativeLayout
         initData();
     }
 
-    @Override
-    protected void onFinishInflate() {
+    @Override protected void onFinishInflate() {
         super.onFinishInflate();
         initView();
     }
@@ -75,8 +73,8 @@ public class IndictorView extends RelativeLayout
         mImageView = rootView.findViewById(R.id.tip_view);
         mViewPager = rootView.findViewById(R.id.view_pager);
         mViewPager.setOverScrollMode(View.OVER_SCROLL_NEVER);
-        mAdapter = new MusicPagerAdapter(mQueue, mContext);
-        mViewPager.setAdapter(mAdapter);
+        mMusicPagerAdapter = new MusicPagerAdapter(mQueue, mContext, null);
+        mViewPager.setAdapter(mMusicPagerAdapter);
         showLoadView(false);
         //要在UI初始化完，否则会多一次listener响应
         mViewPager.addOnPageChangeListener(this);
@@ -87,20 +85,17 @@ public class IndictorView extends RelativeLayout
 
     }
 
-    @Override
-    public void onPageSelected(int position) {
+    @Override public void onPageSelected(int position) {
+        //指定要播放的position
         AudioController.getInstance().setPlayIndex(position);
     }
 
-    @Override
-    public void onPageScrollStateChanged(int state) {
+    @Override public void onPageScrollStateChanged(int state) {
         switch (state) {
             case ViewPager.SCROLL_STATE_IDLE:
-                //滑动结束
                 showPlayView();
                 break;
             case ViewPager.SCROLL_STATE_DRAGGING:
-                //在滑动过程中
                 showPauseView();
                 break;
             case ViewPager.SCROLL_STATE_SETTLING:
@@ -108,31 +103,38 @@ public class IndictorView extends RelativeLayout
         }
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onAudioLoadEvent(AudioLoadEvent event) {
+    @Subscribe(threadMode = ThreadMode.MAIN) public void onAudioLoadEvent(AudioLoadEvent event) {
+        //更新viewpager为load状态
         mAudioBean = event.mAudioBean;
-        //更新viewpager为load态
         showLoadView(true);
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onAudioStartEvent(AudioStartEvent event) {
-        //更新viewpager为播放态
+    @Subscribe(threadMode = ThreadMode.MAIN) public void onAudioPauseEvent(AudioPauseEvent event) {
+        //更新activity为暂停状态
+        showPauseView();
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN) public void onAudioStartEvent(AudioStartEvent event) {
+        //更新activity为播放状态
         showPlayView();
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onAudioPauseEvent(AudioPauseEvent event) {
-        //更新viewpager为暂停态
-        showPauseView();
+    @Override protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        EventBus.getDefault().unregister(this);
     }
 
     private void showLoadView(boolean isSmooth) {
         mViewPager.setCurrentItem(mQueue.indexOf(mAudioBean), isSmooth);
     }
 
+    private void showPauseView() {
+        Animator anim = mMusicPagerAdapter.getAnim(mViewPager.getCurrentItem());
+        if (anim != null) anim.pause();
+    }
+
     private void showPlayView() {
-        Animator anim = mAdapter.getAnim(mViewPager.getCurrentItem());
+        Animator anim = mMusicPagerAdapter.getAnim(mViewPager.getCurrentItem());
         if (anim != null) {
             if (anim.isPaused()) {
                 anim.resume();
@@ -140,18 +142,5 @@ public class IndictorView extends RelativeLayout
                 anim.start();
             }
         }
-    }
-
-    private void showPauseView() {
-        Animator anim = mAdapter.getAnim(mViewPager.getCurrentItem());
-        if (anim != null) {
-            anim.pause();
-        }
-    }
-
-    @Override
-    protected void onDetachedFromWindow() {
-        super.onDetachedFromWindow();
-        EventBus.getDefault().unregister(this);
     }
 }

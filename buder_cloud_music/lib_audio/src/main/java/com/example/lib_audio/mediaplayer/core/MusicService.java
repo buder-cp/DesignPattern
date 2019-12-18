@@ -14,6 +14,7 @@ import com.example.lib_audio.app.AudioHelper;
 import com.example.lib_audio.mediaplayer.events.AudioFavouriteEvent;
 import com.example.lib_audio.mediaplayer.events.AudioLoadEvent;
 import com.example.lib_audio.mediaplayer.events.AudioPauseEvent;
+import com.example.lib_audio.mediaplayer.events.AudioReleaseEvent;
 import com.example.lib_audio.mediaplayer.events.AudioStartEvent;
 import com.example.lib_audio.mediaplayer.model.AudioBean;
 import com.example.lib_audio.mediaplayer.view.NotificationHelper;
@@ -30,17 +31,17 @@ import static com.example.lib_audio.mediaplayer.view.NotificationHelper.NOTIFICA
 /**
  * 音乐后台服务,并更新notification状态
  */
+/**
+ * 音乐后台服务,并更新notification状态
+ */
 public class MusicService extends Service implements NotificationHelper.NotificationHelperListener {
-    /**
-     * 常量区
-     */
+
     private static String DATA_AUDIOS = "AUDIOS";
+    //actions
     private static String ACTION_START = "ACTION_START";
 
-    /**
-     * data
-     */
     private ArrayList<AudioBean> mAudioBeans;
+
     private NotificationReceiver mReceiver;
 
     /**
@@ -54,36 +55,30 @@ public class MusicService extends Service implements NotificationHelper.Notifica
         AudioHelper.getContext().startService(intent);
     }
 
-    @Nullable
-    @Override
-    public IBinder onBind(Intent intent) {
+    @Nullable @Override public IBinder onBind(Intent intent) {
         return null;
     }
 
-    @Override
-    public void onCreate() {
+    @Override public void onCreate() {
         super.onCreate();
         EventBus.getDefault().register(this);
         registerBroadcastReceiver();
     }
 
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
+    @Override public int onStartCommand(Intent intent, int flags, int startId) {
         mAudioBeans = (ArrayList<AudioBean>) intent.getSerializableExtra(DATA_AUDIOS);
-        if (intent.getAction().equals(ACTION_START)) {
-            //播放音乐
+        if (ACTION_START.equals(intent.getAction())) {
+            //开始播放
             playMusic();
-            //初始化notification
+            //初始化前台Notification
             NotificationHelper.getInstance().init(this);
         }
         return super.onStartCommand(intent, flags, startId);
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        EventBus.getDefault().unregister(this);
-        unRegisterBroadcastReceiver();
+    private void playMusic() {
+        AudioController.getInstance().setQueue(mAudioBeans);
+        AudioController.getInstance().play();
     }
 
     private void registerBroadcastReceiver() {
@@ -101,41 +96,42 @@ public class MusicService extends Service implements NotificationHelper.Notifica
         }
     }
 
-    private void playMusic() {
-        AudioController.getInstance().setQueue(mAudioBeans);
-        AudioController.getInstance().play();
-    }
-
-    @Override
-    public void onNotificationInit() {
-        //绑定notification与service,并使服务成为前台服务
+    @Override public void onNotificationInit() {
+        //service与Notification绑定
         startForeground(NOTIFICATION_ID, NotificationHelper.getInstance().getNotification());
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onAudioLoadEvent(AudioLoadEvent event) {
-        //更新notification状态为加载态
+    @Override public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+        unRegisterBroadcastReceiver();
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN) public void onAudioLoadEvent(AudioLoadEvent event) {
+        //更新notifacation为load状态
         NotificationHelper.getInstance().showLoadStatus(event.mAudioBean);
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onAudioStartEvent(AudioStartEvent event) {
-        //更新notification状态为play态
+    @Subscribe(threadMode = ThreadMode.MAIN) public void onAudioPauseEvent(AudioPauseEvent event) {
+        //更新notifacation为暂停状态
+        NotificationHelper.getInstance().showPauseStatus();
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN) public void onAudioStartEvent(AudioStartEvent event) {
+        //更新notifacation为播放状态
         NotificationHelper.getInstance().showPlayStatus();
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onAudioPauseEvent(AudioPauseEvent event) {
-        //更新notification状态为pause态
-        NotificationHelper.getInstance().showPauseStatus();
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onAudioFavouriteEvent(AudioFavouriteEvent event) {
-        //更新notification状态为pause态
+        //更新notifacation收藏状态
         NotificationHelper.getInstance().changeFavouriteStatus(event.isFavourite);
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onAudioReleaseEvent(AudioReleaseEvent event) {
+        //移除notifacation
+    }
 
     /**
      * 接收Notification发送的广播
@@ -149,24 +145,23 @@ public class MusicService extends Service implements NotificationHelper.Notifica
         public static final String EXTRA_PRE = "play_previous";
         public static final String EXTRA_FAV = "play_favourite";
 
-        @Override
-        public void onReceive(Context context, Intent intent) {
+        @Override public void onReceive(Context context, Intent intent) {
             if (intent == null || TextUtils.isEmpty(intent.getAction())) {
                 return;
             }
-            String action = intent.getStringExtra(EXTRA);
-            switch (action) {
+            String extra = intent.getStringExtra(EXTRA);
+            switch (extra) {
                 case EXTRA_PLAY:
+                    //处理播放暂停事件,可以封到AudioController中
                     AudioController.getInstance().playOrPause();
                     break;
                 case EXTRA_PRE:
-                    AudioController.getInstance().previous();
+                    AudioController.getInstance().previous(); //不管当前状态，直接播放
                     break;
                 case EXTRA_NEXT:
                     AudioController.getInstance().next();
                     break;
                 case EXTRA_FAV:
-                    //收藏广播处理
                     AudioController.getInstance().changeFavourite();
                     break;
             }

@@ -24,24 +24,20 @@ import com.example.lib_image_loader.app.ImageLoaderManager;
  * 1.完成notification的创建和初始化
  * 2.对外提供表更新notification的方法
  */
+/**
+ * 音乐Notification帮助类
+ */
 public class NotificationHelper {
 
     public static final String CHANNEL_ID = "channel_id_audio";
     public static final String CHANNEL_NAME = "channel_name_audio";
     public static final int NOTIFICATION_ID = 0x111;
 
-    /**
-     * UI相关
-     */
     //最终的Notification显示类
     private Notification mNotification;
     private RemoteViews mRemoteViews; // 大布局
     private RemoteViews mSmallRemoteViews; //小布局
     private NotificationManager mNotificationManager;
-
-    /**
-     * data
-     */
     private NotificationHelperListener mListener;
     private String packageName;
     //当前要播的歌曲Bean
@@ -73,6 +69,10 @@ public class NotificationHelper {
             //首先创建布局
             initRemoteViews();
             //再构建Notification
+            Intent intent = new Intent(AudioHelper.getContext(), MusicPlayerActivity.class);
+            PendingIntent pendingIntent = PendingIntent.getActivity(AudioHelper.getContext(), 0, intent,
+                    PendingIntent.FLAG_UPDATE_CURRENT);
+
             //适配安卓8.0的消息渠道
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 NotificationChannel channel =
@@ -81,12 +81,9 @@ public class NotificationHelper {
                 channel.enableVibration(false);
                 mNotificationManager.createNotificationChannel(channel);
             }
-            Intent intent = new Intent(AudioHelper.getContext(), MusicPlayerActivity.class);
-            PendingIntent pendingIntent = PendingIntent.getActivity(AudioHelper.getContext(), 0, intent,
-                    PendingIntent.FLAG_UPDATE_CURRENT);
             NotificationCompat.Builder builder =
-                    new NotificationCompat.Builder(AudioHelper.getContext(), CHANNEL_ID)
-                            .setContentIntent(pendingIntent)
+                    new NotificationCompat.Builder(AudioHelper.getContext(), CHANNEL_ID).setContentIntent(
+                            pendingIntent)
                             .setSmallIcon(R.mipmap.ic_launcher)
                             .setCustomBigContentView(mRemoteViews) //大布局
                             .setContent(mSmallRemoteViews); //正常布局，两个布局可以切换
@@ -159,53 +156,42 @@ public class NotificationHelper {
         mRemoteViews.setOnClickPendingIntent(R.id.favourite_view, favouritePendingIntent);
     }
 
+    public Notification getNotification() {
+        return mNotification;
+    }
+
     /**
-     * 更新为加载状态
+     * 显示Notification的加载状态
      */
     public void showLoadStatus(AudioBean bean) {
+        //防止空指针crash
         mAudioBean = bean;
         if (mRemoteViews != null) {
             mRemoteViews.setImageViewResource(R.id.play_view, R.mipmap.note_btn_pause_white);
             mRemoteViews.setTextViewText(R.id.title_view, mAudioBean.name);
             mRemoteViews.setTextViewText(R.id.tip_view, mAudioBean.album);
-            //为notification中的imageview加载图片
             ImageLoaderManager.getInstance()
-                    .displayImageForNotification(
-                            AudioHelper.getContext(),
-                            mRemoteViews,
-                            R.id.image_view,
-                            mNotification,
-                            NOTIFICATION_ID,
-                            mAudioBean.albumPic
-                    );
-            //更新收藏状态
-            if (GreenDaoHelper.selectFavourite(mAudioBean) != null) {
-                //被收藏过
+                    .displayImageForNotification(AudioHelper.getContext(), mRemoteViews, R.id.image_view,
+                            mNotification, NOTIFICATION_ID, mAudioBean.albumPic);
+            //更新收藏view
+            if (null != GreenDaoHelper.selectFavourite(mAudioBean)) {
                 mRemoteViews.setImageViewResource(R.id.favourite_view, R.mipmap.note_btn_loved);
             } else {
-                //没收藏过
                 mRemoteViews.setImageViewResource(R.id.favourite_view, R.mipmap.note_btn_love_white);
             }
-            //更新小布局
+
+            //小布局也要更新
             mSmallRemoteViews.setImageViewResource(R.id.play_view, R.mipmap.note_btn_pause_white);
-            mRemoteViews.setTextViewText(R.id.title_view, mAudioBean.name);
-            mRemoteViews.setTextViewText(R.id.tip_view, mAudioBean.album);
+            mSmallRemoteViews.setTextViewText(R.id.title_view, mAudioBean.name);
+            mSmallRemoteViews.setTextViewText(R.id.tip_view, mAudioBean.album);
             ImageLoaderManager.getInstance()
-                    .displayImageForNotification(
-                            AudioHelper.getContext(),
-                            mSmallRemoteViews,
-                            R.id.image_view,
-                            mNotification,
-                            NOTIFICATION_ID,
-                            mAudioBean.albumPic
-                    );
+                    .displayImageForNotification(AudioHelper.getContext(), mSmallRemoteViews, R.id.image_view,
+                            mNotification, NOTIFICATION_ID, mAudioBean.albumPic);
+
             mNotificationManager.notify(NOTIFICATION_ID, mNotification);
         }
     }
 
-    /**
-     * 更新为播放状态
-     */
     public void showPlayStatus() {
         if (mRemoteViews != null) {
             mRemoteViews.setImageViewResource(R.id.play_view, R.mipmap.note_btn_pause_white);
@@ -214,9 +200,6 @@ public class NotificationHelper {
         }
     }
 
-    /**
-     * 更新为暂停状态
-     */
     public void showPauseStatus() {
         if (mRemoteViews != null) {
             mRemoteViews.setImageViewResource(R.id.play_view, R.mipmap.note_btn_play_white);
@@ -231,10 +214,6 @@ public class NotificationHelper {
                     isFavourite ? R.mipmap.note_btn_loved : R.mipmap.note_btn_love_white);
             mNotificationManager.notify(NOTIFICATION_ID, mNotification);
         }
-    }
-
-    public Notification getNotification() {
-        return mNotification;
     }
 
     /**

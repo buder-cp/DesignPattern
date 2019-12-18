@@ -1,5 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'org.greenrobot.greendao'
+apply plugin: 'com.alibaba.arouter'
 apply plugin: 'maven'
 
 android {
@@ -12,7 +13,12 @@ android {
         targetSdkVersion this.rootProject.android.targetSdkVersion
         versionCode this.rootProject.android.versionCode
         versionName this.rootProject.android.versionName
-
+        //ARouter配置
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [AROUTER_MODULE_NAME: project.getName(), AROUTER_GENERATE_DOC: "enable"]
+            }
+        }
     }
 
     buildTypes {
@@ -48,6 +54,11 @@ dependencies {
     compileOnly rootProject.depsLibs.eventbus
     //占位主工程的rxjava库
     compileOnly rootProject.depsLibs.rxjava
+    //占位主工程arouter库
+    compileOnly(rootProject.depsLibs.arouterapi) {
+        exclude group: 'com.android.support'
+    }
+    annotationProcessor rootProject.depsLibs.aroutercompiler
 
     //占位主工程自己源码库
     compileOnly project(':lib_image_loader')

@@ -10,52 +10,58 @@ import java.io.IOException;
 public class CustomMediaPlayer extends MediaPlayer implements MediaPlayer.OnCompletionListener {
 
     public enum Status {
-        IDEL, INITALIZED, STARTED, PAUSED, STOPPTED, COMPLETED
+        IDLE, INITIALIZED, STARTED, PAUSED, STOPPED, COMPLETED
     }
 
-    private OnCompletionListener mCompletionListener;
     private Status mState;
+
+    private OnCompletionListener mOnCompletionListener;
 
     public CustomMediaPlayer() {
         super();
-        mState = Status.IDEL;
+        mState = Status.IDLE;
         super.setOnCompletionListener(this);
     }
 
-
-    @Override
-    public void reset() {
+    @Override public void reset() {
         super.reset();
-        mState = Status.IDEL;
+        mState = Status.IDLE;
     }
 
-    @Override
-    public void setDataSource(String path) throws IOException, IllegalArgumentException, IllegalStateException, SecurityException {
+    @Override public void setDataSource(String path)
+            throws IOException, IllegalArgumentException, SecurityException, IllegalStateException {
         super.setDataSource(path);
-        mState = Status.INITALIZED;
+        mState = Status.INITIALIZED;
     }
 
-    @Override
-    public void start() throws IllegalStateException {
+    @Override public void start() {
         super.start();
         mState = Status.STARTED;
     }
 
-    @Override
-    public void pause() throws IllegalStateException {
+    @Override public void setOnCompletionListener(OnCompletionListener listener) {
+        this.mOnCompletionListener = listener;
+    }
+
+    @Override public void onCompletion(MediaPlayer mp) {
+        mState = Status.COMPLETED;
+        if (mOnCompletionListener != null) {
+            mOnCompletionListener.onCompletion(mp);
+        }
+    }
+
+    @Override public void stop() throws IllegalStateException {
+        super.stop();
+        mState = Status.STOPPED;
+    }
+
+    @Override public void pause() throws IllegalStateException {
         super.pause();
         mState = Status.PAUSED;
     }
 
-    @Override
-    public void stop() throws IllegalStateException {
-        super.stop();
-        mState = Status.STOPPTED;
-    }
-
-    @Override
-    public void onCompletion(MediaPlayer mp) {
-        mState = Status.COMPLETED;
+    public void setState(Status mState) {
+        this.mState = mState;
     }
 
     public Status getState() {
@@ -64,9 +70,5 @@ public class CustomMediaPlayer extends MediaPlayer implements MediaPlayer.OnComp
 
     public boolean isComplete() {
         return mState == Status.COMPLETED;
-    }
-
-    public void setCompleteListener(OnCompletionListener listener) {
-        mCompletionListener = listener;
     }
 }

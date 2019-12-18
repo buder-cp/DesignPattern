@@ -28,19 +28,16 @@ public class MusicListAdapter extends RecyclerView.Adapter {
         mContext = context;
     }
 
-    @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    @Override public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new MyViewHolder(
                 LayoutInflater.from(parent.getContext()).inflate(R.layout.dialog_bottom_sheet_item, null));
     }
 
-    @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    @Override public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         final AudioBean bean = mAudioBeans.get(position);
         MyViewHolder myViewHolder = (MyViewHolder) holder;
         myViewHolder.mLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+            @Override public void onClick(View v) {
                 AudioController.getInstance().addAudio(bean);
             }
         });
@@ -61,8 +58,7 @@ public class MusicListAdapter extends RecyclerView.Adapter {
         }
     }
 
-    @Override
-    public int getItemCount() {
+    @Override public int getItemCount() {
         return mAudioBeans == null ? 0 : mAudioBeans.size();
     }
 

@@ -27,8 +27,7 @@ public class AudioFocusManager implements AudioManager.OnAudioFocusChangeListene
         audioManager.abandonAudioFocus(this);
     }
 
-    @Override
-    public void onAudioFocusChange(int focusChange) {
+    @Override public void onAudioFocusChange(int focusChange) {
         switch (focusChange) {
             // 重新获得焦点
             case AudioManager.AUDIOFOCUS_GAIN:
@@ -66,4 +65,5 @@ public class AudioFocusManager implements AudioManager.OnAudioFocusChangeListene
         void audioFocusLossDuck();
     }
 }
+
 

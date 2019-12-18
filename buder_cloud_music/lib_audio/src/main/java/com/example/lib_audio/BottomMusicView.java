@@ -15,8 +15,10 @@ import android.widget.TextView;
 import com.example.lib_audio.mediaplayer.core.AudioController;
 import com.example.lib_audio.mediaplayer.events.AudioLoadEvent;
 import com.example.lib_audio.mediaplayer.events.AudioPauseEvent;
+import com.example.lib_audio.mediaplayer.events.AudioProgressEvent;
 import com.example.lib_audio.mediaplayer.events.AudioStartEvent;
 import com.example.lib_audio.mediaplayer.model.AudioBean;
+import com.example.lib_audio.mediaplayer.view.MusicListDialog;
 import com.example.lib_audio.mediaplayer.view.MusicPlayerActivity;
 import com.example.lib_image_loader.app.ImageLoaderManager;
 
@@ -62,16 +64,13 @@ public class BottomMusicView extends RelativeLayout {
     private void initView() {
         View rootView = LayoutInflater.from(mContext).inflate(R.layout.bottom_view, this);
         rootView.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
+            @Override public void onClick(View v) {
                 //跳到音乐播放Activitity
                 MusicPlayerActivity.start((Activity) mContext);
             }
         });
         mLeftView = rootView.findViewById(R.id.album_view);
-        //让左侧mLeftView不停旋转
-        ObjectAnimator animator = ObjectAnimator
-                .ofFloat(mLeftView, View.ROTATION.getName(), 0f, 360);
+        ObjectAnimator animator = ObjectAnimator.ofFloat(mLeftView, View.ROTATION.getName(), 0f, 360);
         animator.setDuration(10000);
         animator.setInterpolator(new LinearInterpolator());
         animator.setRepeatCount(-1);
@@ -81,48 +80,51 @@ public class BottomMusicView extends RelativeLayout {
         mAlbumView = rootView.findViewById(R.id.audio_album_view);
         mPlayView = rootView.findViewById(R.id.play_view);
         mPlayView.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
+            @Override public void onClick(View v) {
                 //处理播放暂停事件
                 AudioController.getInstance().playOrPause();
             }
         });
         mRightView = rootView.findViewById(R.id.show_list_view);
         mRightView.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
+            @Override public void onClick(View v) {
                 //显示音乐列表对话框
+                MusicListDialog dialog = new MusicListDialog(mContext);
+                dialog.show();
             }
         });
     }
 
-    @Override
-    protected void onDetachedFromWindow() {
+    @Override protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
         EventBus.getDefault().unregister(this);
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onAudioLoadEvent(AudioLoadEvent event) {
-        //监听加载事件
+    @Subscribe(threadMode = ThreadMode.MAIN) public void onAudioLoadEvent(AudioLoadEvent event) {
+        //更新当前view为load状态
         mAudioBean = event.mAudioBean;
-        showLoadingView();
+        showLoadView();
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onAudioStartEvent(AudioStartEvent event) {
+    @Subscribe(threadMode = ThreadMode.MAIN) public void onAudioPauseEvent(AudioPauseEvent event) {
+        //更新当前view为暂停状态
+        showPauseView();
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN) public void onAudioStartEvent(AudioStartEvent event) {
+        //更新当前view为播放状态
         showPlayView();
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onAudioPauseEvent(AudioPauseEvent event) {
-        showPauseView();
+    public void onAudioProgrssEvent(AudioProgressEvent event) {
+        //更新当前view的播放进度
     }
 
-    private void showLoadingView() {
+    private void showLoadView() {
+        //目前loading状态的UI处理与pause逻辑一样，分开为了以后好扩展
         if (mAudioBean != null) {
-            ImageLoaderManager.getInstance().
-                    displayImageForCircle(mLeftView, mAudioBean.albumPic);
+            ImageLoaderManager.getInstance().displayImageForCircle(mLeftView, mAudioBean.albumPic);
             mTitleView.setText(mAudioBean.name);
             mAlbumView.setText(mAudioBean.album);
             mPlayView.setImageResource(R.mipmap.note_btn_pause_white);

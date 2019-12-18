@@ -61,3 +61,4 @@ public class GreenDaoHelper {
         return favourite;
     }
 }
+

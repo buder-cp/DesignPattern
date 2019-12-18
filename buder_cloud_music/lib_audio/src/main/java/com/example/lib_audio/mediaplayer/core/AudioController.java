@@ -279,15 +279,13 @@ public class AudioController {
     }
 
     //插放完毕事件处理
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onAudioCompleteEvent(
+    @Subscribe(threadMode = ThreadMode.MAIN) public void onAudioCompleteEvent(
             AudioCompleteEvent event) {
         next();
     }
 
     //播放出错事件处理
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onAudioErrorEvent(AudioErrorEvent event) {
+    @Subscribe(threadMode = ThreadMode.MAIN) public void onAudioErrorEvent(AudioErrorEvent event) {
         next();
     }
 }

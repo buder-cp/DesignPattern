@@ -14,37 +14,23 @@ import com.example.lib_audio.mediaplayer.db.FavouriteDao;
 /**
  * 收藏表
  */
-@Entity
-public class Favourite {
-    @Id(autoincrement = true)
-    Long favouriteId;
+@Entity public class Favourite {
 
-    @NotNull
-    String audioId;
-
+    @Id(autoincrement = true) Long favouriteId;
+    @NotNull String audioId;
     //一条收藏记录唯一对应一条实体
-    @ToOne(joinProperty = "audioId")
-    AudioBean audioBean;
-
+    @ToOne(joinProperty = "audioId") AudioBean audioBean;
     /** Used to resolve relations */
-    @Generated(hash = 2040040024)
-    private transient DaoSession daoSession;
-
+    @Generated(hash = 2040040024) private transient DaoSession daoSession;
     /** Used for active entity operations. */
-    @Generated(hash = 1743949577)
-    private transient FavouriteDao myDao;
+    @Generated(hash = 1743949577) private transient FavouriteDao myDao;
 
-    @Generated(hash = 249106606)
-    private transient String audioBean__resolvedKey;
-
-    @Generated(hash = 1445024019)
-    public Favourite(Long favouriteId, @NotNull String audioId) {
+    @Generated(hash = 1445024019) public Favourite(Long favouriteId, @NotNull String audioId) {
         this.favouriteId = favouriteId;
         this.audioId = audioId;
     }
 
-    @Generated(hash = 1933414424)
-    public Favourite() {
+    @Generated(hash = 1933414424) public Favourite() {
     }
 
     public Long getFavouriteId() {
@@ -63,9 +49,10 @@ public class Favourite {
         this.audioId = audioId;
     }
 
+    @Generated(hash = 249106606) private transient String audioBean__resolvedKey;
+
     /** To-one relationship, resolved on first access. */
-    @Generated(hash = 281167394)
-    public AudioBean getAudioBean() {
+    @Generated(hash = 281167394) public AudioBean getAudioBean() {
         String __key = this.audioId;
         if (audioBean__resolvedKey == null || audioBean__resolvedKey != __key) {
             final DaoSession daoSession = this.daoSession;
@@ -83,8 +70,7 @@ public class Favourite {
     }
 
     /** called by internal mechanisms, do not call yourself. */
-    @Generated(hash = 910180402)
-    public void setAudioBean(@NotNull AudioBean audioBean) {
+    @Generated(hash = 910180402) public void setAudioBean(@NotNull AudioBean audioBean) {
         if (audioBean == null) {
             throw new DaoException(
                     "To-one property 'audioId' has not-null constraint; cannot set to-one to null");
@@ -100,8 +86,7 @@ public class Favourite {
      * Convenient call for {@link org.greenrobot.greendao.AbstractDao#delete(Object)}.
      * Entity must attached to an entity context.
      */
-    @Generated(hash = 128553479)
-    public void delete() {
+    @Generated(hash = 128553479) public void delete() {
         if (myDao == null) {
             throw new DaoException("Entity is detached from DAO context");
         }
@@ -112,8 +97,7 @@ public class Favourite {
      * Convenient call for {@link org.greenrobot.greendao.AbstractDao#refresh(Object)}.
      * Entity must attached to an entity context.
      */
-    @Generated(hash = 1942392019)
-    public void refresh() {
+    @Generated(hash = 1942392019) public void refresh() {
         if (myDao == null) {
             throw new DaoException("Entity is detached from DAO context");
         }
@@ -124,8 +108,7 @@ public class Favourite {
      * Convenient call for {@link org.greenrobot.greendao.AbstractDao#update(Object)}.
      * Entity must attached to an entity context.
      */
-    @Generated(hash = 713229351)
-    public void update() {
+    @Generated(hash = 713229351) public void update() {
         if (myDao == null) {
             throw new DaoException("Entity is detached from DAO context");
         }
@@ -133,10 +116,8 @@ public class Favourite {
     }
 
     /** called by internal mechanisms, do not call yourself. */
-    @Generated(hash = 1142028328)
-    public void __setDaoSession(DaoSession daoSession) {
+    @Generated(hash = 1142028328) public void __setDaoSession(DaoSession daoSession) {
         this.daoSession = daoSession;
         myDao = daoSession != null ? daoSession.getFavouriteDao() : null;
     }
-
 }

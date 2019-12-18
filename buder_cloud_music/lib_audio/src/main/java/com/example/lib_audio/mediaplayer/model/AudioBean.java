@@ -10,9 +10,9 @@ import java.io.Serializable;
 
 /**
  * 1.歌曲实体
+ * 2.引入greendao以后扩展了许多
  */
-@Entity
-public class AudioBean implements Serializable {
+@Entity public class AudioBean implements Serializable {
 
     private static final long serialVersionUID = -8849228294348905620L;
 
@@ -30,11 +30,8 @@ public class AudioBean implements Serializable {
         this.totalTime = totalTime;
     }
 
-
-    @Generated(hash = 1628963493)
-    public AudioBean() {
+    @Generated(hash = 1628963493) public AudioBean() {
     }
-
 
     public String getId() {
         return this.id;
@@ -100,38 +97,28 @@ public class AudioBean implements Serializable {
         this.totalTime = totalTime;
     }
 
-    @Id
-    public String id;
+    @Id public String id;
     //地址
-    @NotNull
-    @Unique
-    public String mUrl;
+    @NotNull @Unique public String mUrl;
 
     //歌名
-    @NotNull
-    public String name;
+    @NotNull public String name;
 
     //作者
-    @NotNull
-    public String author;
+    @NotNull public String author;
 
     //所属专辑
-    @NotNull
-    public String album;
+    @NotNull public String album;
 
-    @NotNull
-    public String albumInfo;
+    @NotNull public String albumInfo;
 
     //专辑封面
-    @NotNull
-    public String albumPic;
+    @NotNull public String albumPic;
 
     //时长
-    @NotNull
-    public String totalTime;
+    @NotNull public String totalTime;
 
-    @Override
-    public boolean equals(Object other) {
+    @Override public boolean equals(Object other) {
         if (other == null) {
             return false;
         }
@@ -141,3 +128,4 @@ public class AudioBean implements Serializable {
         return ((AudioBean) other).id.equals(this.id);
     }
 }
+

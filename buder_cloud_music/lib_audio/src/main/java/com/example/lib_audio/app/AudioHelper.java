@@ -14,6 +14,11 @@ import java.util.ArrayList;
 /**
  * @function 唯一与外界通信的帮助类
  */
+/**
+ * Created by qndroid on 19/5/20.
+ *
+ * @function 唯一与外界通信的帮助类
+ */
 public final class AudioHelper {
 
     //SDK全局Context, 供子模块用
@@ -21,12 +26,8 @@ public final class AudioHelper {
 
     public static void init(Context context) {
         mContext = context;
+        //初始化本地数据库
         GreenDaoHelper.initDatabase();
-    }
-
-
-    public static Context getContext() {
-        return mContext;
     }
 
     //外部启动MusicService方法
@@ -45,5 +46,9 @@ public final class AudioHelper {
 
     public static void resumeAudio() {
         AudioController.getInstance().resume();
+    }
+
+    public static Context getContext() {
+        return mContext;
     }
 }

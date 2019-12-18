@@ -53,8 +53,7 @@ public class MusicListDialog extends BottomSheetDialog {
         EventBus.getDefault().register(this);
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         dm = mContext.getResources().getDisplayMetrics();
         setContentView(R.layout.dialog_bottom_sheet);
@@ -84,8 +83,7 @@ public class MusicListDialog extends BottomSheetDialog {
         mTipView = findViewById(R.id.mode_image_view);
         mPlayModeView = findViewById(R.id.mode_text_view);
         mPlayModeView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+            @Override public void onClick(View v) {
                 //调用切换播放模式事件
                 switch (mPlayMode) {
                     case LOOP:
@@ -111,8 +109,7 @@ public class MusicListDialog extends BottomSheetDialog {
         mRecyclerView.setAdapter(mMusicListAdapter);
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onAudioLoadEvent(AudioLoadEvent event) {
+    @Subscribe(threadMode = ThreadMode.MAIN) public void onAudioLoadEvent(AudioLoadEvent event) {
         mAudioBean = event.mAudioBean;
         //更新列表
         updateList();
@@ -125,8 +122,7 @@ public class MusicListDialog extends BottomSheetDialog {
         updatePlayModeView();
     }
 
-    @Override
-    public void dismiss() {
+    @Override public void dismiss() {
         super.dismiss();
         EventBus.getDefault().unregister(this);
     }
