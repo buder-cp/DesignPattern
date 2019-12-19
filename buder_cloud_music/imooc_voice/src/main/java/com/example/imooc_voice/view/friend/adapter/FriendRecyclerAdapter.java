@@ -7,9 +7,9 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.example.imooc_voice.R;
-import com.example.imooc_voice.view.friend.model.FriendBodyValue;
+import com.example.imooc_voice.model.friend.FriendBodyValue;
+import com.example.imooc_voice.utils.UserManager;
 import com.example.imooc_voice.view.login.LoginActivity;
-import com.example.imooc_voice.view.login.manager.UserManager;
 import com.example.lib_audio.app.AudioHelper;
 import com.example.lib_common_ui.MultiImageViewLayout;
 import com.example.lib_common_ui.recyclerview.MultiItemTypeAdapter;
@@ -35,10 +35,9 @@ public class FriendRecyclerAdapter extends MultiItemTypeAdapter {
     }
 
     /**
-     * 音乐类型item
+     * 图片类型item
      */
     private class MusicItemDelegate implements ItemViewDelegate<FriendBodyValue> {
-
         @Override
         public int getItemViewLayoutId() {
             return R.layout.item_friend_list_picture_layout;
@@ -51,7 +50,6 @@ public class FriendRecyclerAdapter extends MultiItemTypeAdapter {
 
         @Override
         public void convert(ViewHolder holder, final FriendBodyValue recommandBodyValue, int position) {
-            //为viewholder绑定数据
             holder.setText(R.id.name_view, recommandBodyValue.name + " 分享单曲:");
             holder.setText(R.id.fansi_view, recommandBodyValue.fans + "粉丝");
             holder.setText(R.id.text_view, recommandBodyValue.text);
@@ -62,14 +60,14 @@ public class FriendRecyclerAdapter extends MultiItemTypeAdapter {
             holder.setOnClickListener(R.id.album_layout, new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //调用音频播放器方法
+                    //调用播放器装饰类
                     AudioHelper.addAudio((Activity) mContext, recommandBodyValue.audioBean);
                 }
             });
             holder.setOnClickListener(R.id.guanzhu_view, new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (!UserManager.getInstance().hasLogin()) {
+                    if (!UserManager.getInstance().hasLogined()) {
                         //goto login
                         LoginActivity.start(mContext);
                     }
@@ -80,10 +78,9 @@ public class FriendRecyclerAdapter extends MultiItemTypeAdapter {
             ImageView albumPicView = holder.getView(R.id.album_view);
             ImageLoaderManager.getInstance()
                     .displayImageForView(albumPicView, recommandBodyValue.audioBean.albumPic);
-            //多图自动布局
+
             MultiImageViewLayout imageViewLayout = holder.getView(R.id.image_layout);
             imageViewLayout.setList(recommandBodyValue.pics);
-
         }
     }
 
@@ -112,7 +109,7 @@ public class FriendRecyclerAdapter extends MultiItemTypeAdapter {
             holder.setOnClickListener(R.id.guanzhu_view, new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (!UserManager.getInstance().hasLogin()) {
+                    if (!UserManager.getInstance().hasLogined()) {
                         //goto login
                         LoginActivity.start(mContext);
                     }
@@ -122,7 +119,6 @@ public class FriendRecyclerAdapter extends MultiItemTypeAdapter {
             ImageLoaderManager.getInstance().displayImageForCircle(avatar, recommandBodyValue.avatr);
         }
     }
-
 }
 
 

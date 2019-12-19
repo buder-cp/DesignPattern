@@ -1,7 +1,8 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.alibaba.arouter'
 
 android {
-    compileSdkVersion this.rootProject.android.compileSdkVersion
+    compileSdkVersion rootProject.android.compileSdkVersion
 
 
 
@@ -13,6 +14,22 @@ android {
         versionName this.rootProject.android.versionName
         multiDexEnabled this.rootProject.android.multiDexEnabled
 
+        //ARouter配置
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [AROUTER_MODULE_NAME: project.getName(), AROUTER_GENERATE_DOC: "enable"]
+            }
+        }
+
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
+
+    lintOptions {
+        abortOnError false
     }
 
     buildTypes {
@@ -22,25 +39,30 @@ android {
         }
     }
 
-    lintOptions {
-        abortOnError false
-    }
-
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation this.rootProject.depsLibs.appcompat
-    implementation this.rootProject.depsLibs.recyclerview
-
-    //rxjava
-    implementation rootProject.depsLibs.rxjava
-    implementation rootProject.depsLibs.rxandroid
-    //eventbus
+    implementation rootProject.depsLibs.appcompat
+    implementation rootProject.depsLibs.design
+    implementation rootProject.depsLibs.recyclerview
+    implementation rootProject.depsLibs.constraint
+    //eventbus类库依赖
     implementation rootProject.depsLibs.eventbus
     //greendao类库依赖
     implementation rootProject.depsLibs.greendao
+    //rxjava库
+    implementation rootProject.depsLibs.rxjava
+    implementation rootProject.depsLibs.rxandroid
+    //arouter库
+    implementation(rootProject.depsLibs.arouterapi) {
+        exclude group: 'com.android.support'
+    }
+    annotationProcessor rootProject.depsLibs.aroutercompiler
+
+    implementation this.rootProject.depsLibs.appcompat
+    implementation this.rootProject.depsLibs.recyclerview
 
     //本地库工程依赖
     implementation project(':lib_common_ui')

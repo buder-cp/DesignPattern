@@ -1,8 +1,9 @@
 package com.example.imooc_voice.api;
 
-
-import com.example.imooc_voice.view.friend.model.BaseFriendModel;
-import com.example.imooc_voice.view.login.user.User;
+import com.example.imooc_voice.model.discory.BaseRecommandModel;
+import com.example.imooc_voice.model.discory.BaseRecommandMoreModel;
+import com.example.imooc_voice.model.friend.BaseFriendModel;
+import com.example.imooc_voice.model.user.User;
 import com.example.lib_network.okhttp.CommonOkHttpClient;
 import com.example.lib_network.okhttp.request.CommonRequest;
 import com.example.lib_network.okhttp.request.RequestParams;
@@ -35,29 +36,32 @@ public class RequestCenter {
     //根据参数发送所有post请求
     public static void postRequest(String url, RequestParams params, DisposeDataListener listener,
                                    Class<?> clazz) {
-        CommonOkHttpClient.post(CommonRequest.
-                createPostRequest(url, params), new DisposeDataHandle(listener, clazz));
+        CommonOkHttpClient.get(CommonRequest.
+                createGetRequest(url, params), new DisposeDataHandle(listener, clazz));
     }
 
+    public static void requestRecommandData(DisposeDataListener listener) {
+        RequestCenter.postRequest(HttpConstants.HOME_RECOMMAND, null, listener,
+                BaseRecommandModel.class);
+    }
+
+    public static void requestRecommandMore(DisposeDataListener listener) {
+        RequestCenter.postRequest(HttpConstants.HOME_RECOMMAND_MORE, null, listener,
+                BaseRecommandMoreModel.class);
+    }
+
+    public static void requestFriendData(DisposeDataListener listener) {
+        RequestCenter.postRequest(HttpConstants.HOME_FRIEND, null, listener, BaseFriendModel.class);
+    }
 
     /**
      * 用户登陆请求
      */
     public static void login(DisposeDataListener listener) {
+
         RequestParams params = new RequestParams();
         params.put("mb", "18734924592");
         params.put("pwd", "999999q");
         RequestCenter.postRequest(HttpConstants.LOGIN, params, listener, User.class);
-    }
-
-    /**
-     * 朋友页面请求
-     *
-     * @param listener
-     */
-    public static void requestFriendData(DisposeDataListener listener) {
-        postRequest(HttpConstants.HOME_FRIEND,
-                null,
-                listener, BaseFriendModel.class);
     }
 }

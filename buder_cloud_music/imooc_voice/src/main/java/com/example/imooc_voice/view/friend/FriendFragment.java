@@ -15,9 +15,9 @@ import android.view.ViewGroup;
 import com.example.imooc_voice.R;
 import com.example.imooc_voice.api.MockData;
 import com.example.imooc_voice.api.RequestCenter;
+import com.example.imooc_voice.model.friend.BaseFriendModel;
+import com.example.imooc_voice.model.friend.FriendBodyValue;
 import com.example.imooc_voice.view.friend.adapter.FriendRecyclerAdapter;
-import com.example.imooc_voice.view.friend.model.BaseFriendModel;
-import com.example.imooc_voice.view.friend.model.FriendBodyValue;
 import com.example.lib_common_ui.recyclerview.wrapper.LoadMoreWrapper;
 import com.example.lib_network.okhttp.listener.DisposeDataListener;
 import com.example.lib_network.okhttp.utils.ResponseEntityToModule;
@@ -26,6 +26,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+/**
+ * 首页发现fragment
+ */
 /**
  * 首页发现fragment
  */
@@ -51,17 +54,15 @@ public class FriendFragment extends Fragment
         return fragment;
     }
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
+    @Override public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mContext = getActivity();
     }
 
-    @Nullable
-    @Override
+    @Nullable @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_friend_layout, null);
+        View rootView = inflater.inflate(R.layout.fragment_discory_layout, null);
         mSwipeRefreshLayout = rootView.findViewById(R.id.refresh_layout);
         mSwipeRefreshLayout.setColorSchemeColors(
                 getResources().getColor(android.R.color.holo_red_light));
@@ -72,37 +73,32 @@ public class FriendFragment extends Fragment
         return rootView;
     }
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    @Override public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         //发请求更新UI
         requestData();
     }
 
     //下拉刷新接口
-    @Override
-    public void onRefresh() {
+    @Override public void onRefresh() {
         requestData();
     }
 
     //加载更多接口
-    @Override
-    public void onLoadMoreRequested() {
+    @Override public void onLoadMoreRequested() {
         loadMore();
     }
 
     private void loadMore() {
         RequestCenter.requestFriendData(new DisposeDataListener() {
-            @Override
-            public void onSuccess(Object responseObj) {
+            @Override public void onSuccess(Object responseObj) {
                 BaseFriendModel moreData = (BaseFriendModel) responseObj;
                 //追加数据到adapter中
                 mDatas.addAll(moreData.data.list);
                 mLoadMoreWrapper.notifyDataSetChanged();
             }
 
-            @Override
-            public void onFailure(Object reasonObj) {
+            @Override public void onFailure(Object reasonObj) {
                 //显示请求失败View,显示mock数据
                 onSuccess(
                         ResponseEntityToModule.parseJsonToModule(MockData.FRIEND_DATA, BaseFriendModel.class));
@@ -113,15 +109,13 @@ public class FriendFragment extends Fragment
     //请求数据
     private void requestData() {
         RequestCenter.requestFriendData(new DisposeDataListener() {
-            @Override
-            public void onSuccess(Object responseObj) {
+            @Override public void onSuccess(Object responseObj) {
                 mRecommandData = (BaseFriendModel) responseObj;
                 //更新UI
                 updateView();
             }
 
-            @Override
-            public void onFailure(Object reasonObj) {
+            @Override public void onFailure(Object reasonObj) {
                 //显示请求失败View,显示mock数据
                 onSuccess(ResponseEntityToModule.parseJsonToModule(MockData.FRIEND_DATA,
                         BaseFriendModel.class));

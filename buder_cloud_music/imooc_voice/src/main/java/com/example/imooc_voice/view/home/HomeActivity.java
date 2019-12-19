@@ -16,15 +16,16 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.example.imooc_voice.R;
+import com.example.imooc_voice.constant.Constant;
+import com.example.imooc_voice.model.CHANNEL;
+import com.example.imooc_voice.model.login.LoginEvent;
+import com.example.imooc_voice.utils.UserManager;
 import com.example.imooc_voice.utils.Utils;
 import com.example.imooc_voice.view.home.adpater.HomePagerAdapter;
-import com.example.imooc_voice.view.home.model.CHANNEL;
 import com.example.imooc_voice.view.login.LoginActivity;
-import com.example.imooc_voice.view.login.manager.UserManager;
-import com.example.imooc_voice.view.login.user.LoginEvent;
 import com.example.lib_audio.app.AudioHelper;
-import com.example.lib_audio.mediaplayer.core.AudioController;
 import com.example.lib_audio.mediaplayer.model.AudioBean;
 import com.example.lib_common_ui.base.BaseActivity;
 import com.example.lib_common_ui.pager_indictor.ScaleTransitionPagerTitleView;
@@ -46,12 +47,15 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 
+/**
+ * 首页Activity
+ */
 public class HomeActivity extends BaseActivity implements View.OnClickListener {
 
-    //指定首页要出现的卡片
     private static final CHANNEL[] CHANNELS =
             new CHANNEL[]{CHANNEL.MY, CHANNEL.DISCORY, CHANNEL.FRIEND};
 
+    private UpdateReceiver mReceiver = null;
     /*
      * View
      */
@@ -60,23 +64,22 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
     private View mSearchView;
     private ViewPager mViewPager;
     private HomePagerAdapter mAdapter;
-
+    private View mDrawerQrcodeView;
+    private View mDrawerShareView;
     private View unLogginLayout;
     private ImageView mPhotoView;
 
     /*
      * data
      */
-    private UpdateReceiver mReceiver = null;
     private ArrayList<AudioBean> mLists = new ArrayList<>();
 
-
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         registerBroadcastReceiver();
         EventBus.getDefault().register(this);
-        setContentView(R.layout.activity_home);
+        setContentView(R.layout.activity_main);
         initView();
         initData();
     }
@@ -110,21 +113,26 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
         mToggleView = findViewById(R.id.toggle_view);
         mToggleView.setOnClickListener(this);
         mSearchView = findViewById(R.id.search_view);
-
-        mViewPager = findViewById(R.id.view_pager);
+        mSearchView.setOnClickListener(this);
+        //初始化adpater
         mAdapter = new HomePagerAdapter(getSupportFragmentManager(), CHANNELS);
+        mViewPager = findViewById(R.id.view_pager);
         mViewPager.setAdapter(mAdapter);
         initMagicIndicator();
-        //登录相关UI
+
+        mDrawerQrcodeView = findViewById(R.id.home_qrcode);
+        mDrawerQrcodeView.setOnClickListener(this);
+        mDrawerShareView = findViewById(R.id.home_music);
+        mDrawerShareView.setOnClickListener(this);
+        findViewById(R.id.online_music_view).setOnClickListener(this);
+        findViewById(R.id.check_update_view).setOnClickListener(this);
+
         unLogginLayout = findViewById(R.id.unloggin_layout);
         unLogginLayout.setOnClickListener(this);
         mPhotoView = findViewById(R.id.avatr_view);
-
-        findViewById(R.id.check_update_view).setOnClickListener(this);
-
+        findViewById(R.id.exit_layout).setOnClickListener(this);
     }
 
-    //初始化指示器
     private void initMagicIndicator() {
         MagicIndicator magicIndicator = findViewById(R.id.magic_indicator);
         magicIndicator.setBackgroundColor(Color.WHITE);
@@ -168,10 +176,45 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        unRegisterBroadcastReceiver();
-        EventBus.getDefault().unregister(this);
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.exit_layout:
+                finish();
+                System.exit(0);
+                break;
+            case R.id.unloggin_layout:
+                if (!UserManager.getInstance().hasLogined()) {
+                    LoginActivity.start(this);
+                } else {
+                    mDrawerLayout.closeDrawer(Gravity.LEFT);
+                }
+                break;
+            case R.id.toggle_view:
+                if (mDrawerLayout.isDrawerOpen(Gravity.LEFT)) {
+                    mDrawerLayout.closeDrawer(Gravity.LEFT);
+                } else {
+                    mDrawerLayout.openDrawer(Gravity.LEFT);
+                }
+                break;
+            case R.id.home_qrcode:
+                if (hasPermission(Constant.HARDWEAR_CAMERA_PERMISSION)) {
+                    doCameraPermission();
+                } else {
+                    requestPermission(Constant.HARDWEAR_CAMERA_CODE, Constant.HARDWEAR_CAMERA_PERMISSION);
+                }
+                break;
+            case R.id.home_music:
+                //shareFriend();
+                goToMusic();
+                break;
+            case R.id.online_music_view:
+                //跳到指定webactivity
+                gotoWebView("https://www.imooc.com");
+                break;
+            case R.id.check_update_view:
+                checkUpdate();
+                break;
+        }
     }
 
     @Override
@@ -185,19 +228,26 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
     }
 
     @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.unloggin_layout:
-                if (!UserManager.getInstance().hasLogin()) {
-                    LoginActivity.start(this);
-                } else {
-                    mDrawerLayout.closeDrawer(Gravity.LEFT);
-                }
-                break;
-            case R.id.check_update_view:
-                checkUpdate();
-                break;
-        }
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+        unRegisterBroadcastReceiver();
+    }
+
+    @Override
+    public void doCameraPermission() {
+        ARouter.getInstance().build(Constant.Router.ROUTER_CAPTURE_ACTIVIYT).navigation();
+    }
+
+    private void goToMusic() {
+        ARouter.getInstance().build(Constant.Router.ROUTER_MUSIC_ACTIVIYT).navigation();
+    }
+
+    private void gotoWebView(String url) {
+        ARouter.getInstance()
+                .build(Constant.Router.ROUTER_WEB_ACTIVIYT)
+                .withString("url", url)
+                .navigation();
     }
 
     //启动检查更新
@@ -219,15 +269,6 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
         }
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onLoginEvent(LoginEvent event) {
-        unLogginLayout.setVisibility(View.GONE);
-        mPhotoView.setVisibility(View.VISIBLE);
-        ImageLoaderManager.getInstance()
-                .displayImageForCircle(mPhotoView,
-                        UserManager.getInstance().getUser().data.photoUrl);
-    }
-
     /**
      * 接收Update发送的广播
      */
@@ -240,4 +281,14 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
         }
     }
 
+    /**
+     * 处理登陆事件
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onLoginEvent(LoginEvent event) {
+        unLogginLayout.setVisibility(View.GONE);
+        mPhotoView.setVisibility(View.VISIBLE);
+        ImageLoaderManager.getInstance()
+                .displayImageForCircle(mPhotoView, UserManager.getInstance().getUser().data.photoUrl);
+    }
 }

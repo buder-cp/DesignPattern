@@ -15,35 +15,27 @@ import com.example.imooc_voice.R;
 public class MineFragment extends Fragment {
 
     private Context mContext;
-    private TextView mTextView;
-
-    public MineFragment() {
-    }
 
     public static Fragment newInstance() {
         MineFragment fragment = new MineFragment();
         return fragment;
     }
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
+    @Override public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mContext = getActivity();
     }
 
-    @Nullable
-    @Override
+    @Nullable @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_mine_layout, null);
-        mTextView = rootView.findViewById(R.id.textView);
-        mTextView.setText("我的");
         return rootView;
     }
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    @Override public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         //发请求更新UI
     }
 }
+

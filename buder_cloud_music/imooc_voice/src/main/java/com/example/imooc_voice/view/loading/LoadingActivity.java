@@ -14,15 +14,13 @@ import com.example.lib_pullalive.AliveJobService;
 public class LoadingActivity extends BaseActivity {
 
     private Handler mHandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
+        @Override public void handleMessage(Message msg) {
             startActivity(new Intent(LoadingActivity.this, HomeActivity.class));
             finish();
         }
     };
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loading_layout);
         pullAliveService();
@@ -37,14 +35,13 @@ public class LoadingActivity extends BaseActivity {
         AliveJobService.start(this);
     }
 
-    @Override
-    public void doSDCardPermission() {
+    @Override public void doSDCardPermission() {
         mHandler.sendEmptyMessageDelayed(0, 3000);
     }
 
-    @Override
-    protected void onDestroy() {
+    @Override protected void onDestroy() {
         super.onDestroy();
         mHandler.removeCallbacksAndMessages(null);
     }
 }
+

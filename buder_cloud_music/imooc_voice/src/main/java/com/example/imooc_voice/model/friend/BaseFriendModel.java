@@ -1,4 +1,4 @@
-package com.example.imooc_voice.view.friend.model;
+package com.example.imooc_voice.model.friend;
 
 
 import com.example.imooc_voice.model.BaseModel;
@@ -8,7 +8,7 @@ import com.example.imooc_voice.model.BaseModel;
  */
 public class BaseFriendModel extends BaseModel {
 
-    public String ecode;
-    public String emsg;
-    public FriendModel data;
+  public String ecode;
+  public String emsg;
+  public FriendModel data;
 }

@@ -4,9 +4,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.example.imooc_voice.model.CHANNEL;
+import com.example.imooc_voice.view.VideoFragment;
 import com.example.imooc_voice.view.discory.DiscoryFragment;
 import com.example.imooc_voice.view.friend.FriendFragment;
-import com.example.imooc_voice.view.home.model.CHANNEL;
 import com.example.imooc_voice.view.mine.MineFragment;
 
 
@@ -14,6 +15,7 @@ import com.example.imooc_voice.view.mine.MineFragment;
  * 首页ViewPger的Adpater
  */
 public class HomePagerAdapter extends FragmentPagerAdapter {
+
     private CHANNEL[] mList;
 
     public HomePagerAdapter(FragmentManager fm, CHANNEL[] datas) {
@@ -21,7 +23,7 @@ public class HomePagerAdapter extends FragmentPagerAdapter {
         mList = datas;
     }
 
-    //初始化对应的fragment
+    //这种方式，避免一次性创建所有的framgent
     @Override
     public Fragment getItem(int position) {
         int type = mList[position].getValue();
@@ -32,6 +34,8 @@ public class HomePagerAdapter extends FragmentPagerAdapter {
                 return DiscoryFragment.newInstance();
             case CHANNEL.FRIEND_ID:
                 return FriendFragment.newInstance();
+            case CHANNEL.VIDEO_ID:
+                return VideoFragment.newInstance();
         }
         return null;
     }

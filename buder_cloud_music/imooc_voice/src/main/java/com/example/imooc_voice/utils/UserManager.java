@@ -1,7 +1,7 @@
 package com.example.imooc_voice.utils;
 
 
-import com.example.imooc_voice.view.login.user.User;
+import com.example.imooc_voice.model.user.User;
 
 /**
  * @description 单例管理登陆用户信息
