@@ -65,15 +65,29 @@ dependencies {
     implementation this.rootProject.depsLibs.recyclerview
 
     //本地库工程依赖
+    //基础UI库
     implementation project(':lib_common_ui')
-    implementation project(':lib_network')
-    implementation project(':lib_image_loader')
-    implementation project(':lib_audio')
-    implementation project(':lib_share')
-    implementation project(':lib_pullalive')
-    implementation project(':lib_video')
-    implementation project(':lib_webview')
-    implementation project(':lib_update')
+    //二维码扫描库
     implementation project(':lib_qrcode')
+    //视频播放器组件
+    implementation project(':lib_video')
+    //音频播放器组
+    implementation project(':lib_audio')
+    //自己的maven库依赖
+    //implementation 'com.imooc.android:lib_audio:1.0.0-SNAPSHOT'
+    //webview库
+    implementation project(':lib_webview')
+    //网络请求库
+    implementation project(':lib_network')
+    //app下载更新库
+    implementation project(':lib_update')
+    //分享库
+    implementation project(':lib_share')
+    //图片加载库
+    implementation project(':lib_image_loader')
+    //保活库
+    implementation project(':lib_pullalive')
+    //业务基础库
+    implementation project(':lib_base')
 
 }
