@@ -175,7 +175,7 @@ public class MockData {
           + "        \"text\": \"如果爱，请深爱，不爱请离开。\",\n"
           + "        \"zan\": \"235\",\n"
           + "        \"msg\": \"179\",\n"
-          + "        \"videoUrl\": \"http://fairee.vicp.net:83/2016rm/0116/baishi160116.mp4\"\n"
+          + "        \"videoUrl\": \"http://vfx.mtime.cn/Video/2019/02/04/mp4/190204084208765161.mp4\"\n"
           + "      },\n"
           + "      {\n"
           + "        \"type\": 1,\n"
