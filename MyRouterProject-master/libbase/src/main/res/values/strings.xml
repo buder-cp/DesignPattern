@@ -1,0 +1,10 @@
+<resources>
+
+    <string name="main_module">主模块</string>
+
+    <string name="phone_login">手机登录</string>
+    <string name="login_protacal">登录注册即表明你已同意xx协议</string>
+    <string name="input_phone">请输入手机号</string>
+    <string name="phone_zone">+86</string>
+    <string name="login">登录</string>
+</resources>
