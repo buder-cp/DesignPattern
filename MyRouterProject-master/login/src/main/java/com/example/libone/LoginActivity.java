@@ -7,8 +7,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.example.libbase2.RouterPath;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -22,15 +26,23 @@ public class LoginActivity extends AppCompatActivity {
     EditText etLoginPhone;
     @BindView(R2.id.btn_login_next)
     Button btnLoginNext;
+    @BindView(R2.id.tv_welcome)
+    TextView btnWelcome;
+
+    @Autowired(name = "welcome")
+    protected String mTextWelcome;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
+        ARouter.getInstance().inject(this);
 
         String getPhone = getIntent().getStringExtra("phone");
         etLoginPhone.setText(getPhone);
+
+        btnWelcome.setText(mTextWelcome);
     }
 
     @OnClick(R2.id.btn_login_next)

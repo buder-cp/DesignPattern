@@ -38,11 +38,31 @@
             android:layout_height="match_parent"
             android:background="@null"
             android:hint="@string/input_phone"
-            android:inputType="number"
             android:layout_marginLeft="10dp"
             android:textColor="@color/white"
             android:maxLength="11"
             android:textSize="15sp" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Autowired传参: "
+            android:textColor="@color/white"
+            android:layout_centerVertical="true"/>
+
+        <TextView
+            android:id="@+id/tv_welcome"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="hehehe"
+            android:textColor="@color/white" />
 
     </LinearLayout>
 
