@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".testAcivity.MainActivity">
+
+    <Button
+        android:id="@+id/btn_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onButtonClick"
+        android:text="Activity 跳转"/>
+    <Button
+        android:id="@+id/btn_2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onButtonClick"
+        android:text="Activity 跳转并监听"/>
+
+    <Button
+        android:id="@+id/btn_3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onButtonClick"
+        android:text="Activity 跳转携带参数"/>
+    <Button
+        android:id="@+id/btn_4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onButtonClick"
+        android:text="StartActivityForResult"
+        android:textAllCaps="false"/>
+
+    <Button android:id="@+id/btn_5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onButtonClick"
+            android:text="TEST Service"/>
+
+    <Button android:id="@+id/btn_6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onButtonClick"
+            android:text="TEST Service2"/>
+
+    <Button android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onButtonClick"
+            android:id="@+id/btn_7"
+            android:text="Test URl"/>
+
+    <Button android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onButtonClick"
+            android:id="@+id/btn_8"
+            android:text="Test Interceptor"/>
+
+</LinearLayout>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest package="com.example.administrator.arounterdemo"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+
+    <application
+        android:name=".App"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".testAcivity.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <activity android:name=".testAcivity.ActivityOne">
+        </activity>
+        <activity android:name=".testAcivity.ParseActivity">
+        </activity>
+        <activity android:name=".testAcivity.ActivityResult">
+        </activity>
+        <activity android:name=".testAcivity.UrlSchemeActivity">
+            <intent-filter>
+                <data
+                    android:host="m.aliyun.com"
+                    android:scheme="arouter"/>
+
+                <action android:name="android.intent.action.VIEW"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+            </intent-filter>
+        </activity>
+        <activity android:name=".testAcivity.TestWebview">
+        </activity>
+        <activity android:name=".testAcivity.TestInterceptorActivity">
+        </activity>
+        <activity android:name=".testAcivity.TestActivity1">
+        </activity>
+    </application>
+
+</manifest>
