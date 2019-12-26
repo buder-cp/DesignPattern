@@ -6,8 +6,8 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.Button;
 
-import ctrip.business.event.EventBus;
 import ctrip.business.M;
+import ctrip.business.event.Distributor;
 
 public class ModuleOneActivity extends Activity {
     @Override
@@ -18,7 +18,7 @@ public class ModuleOneActivity extends Activity {
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                EventBus.turn2Acitivity(ModuleOneActivity.this, M.MODULE2_PAY);
+                Distributor.turn2Acitivity(ModuleOneActivity.this, M.MODULE2_PAY);
             }
         });
     }

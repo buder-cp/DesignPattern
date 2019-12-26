@@ -6,11 +6,6 @@ import android.content.Intent;
 
 import ctrip.business.event.TaskDistribution;
 
-/**
- * Description
- * Created by Administrator
- * Time 2017/12/9  18:08
- */
 
 public class Taskimp1 implements TaskDistribution{
 

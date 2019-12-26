@@ -5,10 +5,9 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 
 import ctrip.business.M;
-import ctrip.business.event.EventBus;
+import ctrip.business.event.Distributor;
 
 
 public class ModuleTwoActivity extends Activity {
@@ -20,7 +19,7 @@ public class ModuleTwoActivity extends Activity {
         btn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                EventBus.turn2Acitivity(ModuleTwoActivity.this, M.MODULE1_LOGIN);
+                Distributor.turn2Acitivity(ModuleTwoActivity.this, M.MODULE1_LOGIN);
             }
         });
     }
