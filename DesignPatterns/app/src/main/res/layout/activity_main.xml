@@ -5,11 +5,18 @@
     android:orientation="vertical">
 
     <Button
-        android:id="@+id/proxy_static"
+        android:id="@+id/proxy_static_mode"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
         android:text="代理模式" />
+
+    <Button
+        android:id="@+id/decoration_mode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="装饰器模式" />
 
 
 </LinearLayout>
