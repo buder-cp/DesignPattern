@@ -10,3 +10,5 @@ ARounterDemo-master	ARouter的基础使用
 
 Android-Module-Protocol-master	Android利用反射和多台完成子模块通信
 
+DesignPatterns	静态代理和动态代理
+
