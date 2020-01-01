@@ -13,6 +13,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.facadetoagentmode.facade.FacadeNetWork;
+import com.example.facadetoagentmode.proxy.HttpProxy;
+import com.example.facadetoagentmode.proxy.ICallBack;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -41,8 +43,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         int id = v.getId();
         if (id == R.id.http_request) {
 
-            FacadeNetWork facadeNetWork = FacadeNetWork.getInstance(this);
-            facadeNetWork.get(URL, new FacadeNetWork.Callback() {
+            /**
+             *  使用代理模式的调用
+             */
+            HttpProxy.obtain().get(URL, new ICallBack() {
                 @Override
                 public void onSuccess(Object respone) {
                     Toast.makeText(MainActivity.this, respone.toString(), Toast.LENGTH_SHORT).show();
@@ -54,6 +58,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
             });
 
+
+
+            /**
+             *  使用门面模式的调用
+             */
+//            FacadeNetWork facadeNetWork = FacadeNetWork.getInstance(this);
+//            facadeNetWork.get(URL, new FacadeNetWork.Callback() {
+//                @Override
+//                public void onSuccess(Object respone) {
+//                    Toast.makeText(MainActivity.this, respone.toString(), Toast.LENGTH_SHORT).show();
+//                }
+//
+//                @Override
+//                public void onFailed(String failed) {
+//
+//                }
+//            });
+
+            /**
+             * 最原始的沒有任何封裝的网络调用
+             */
 //            StringRequest stringRequest = new StringRequest(Request.Method.GET,
 //                    URL, new Response.Listener<String>() {
 //                @Override
