@@ -12,6 +12,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.facadetoagentmode.facade.FacadeNetWork;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -39,27 +40,41 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         int id = v.getId();
         if (id == R.id.http_request) {
-            StringRequest stringRequest = new StringRequest(Request.Method.GET,
-                    URL, new Response.Listener<String>() {
-                @Override
-                public void onResponse(String response) {
-                    try {
-                        JSONObject obj = new JSONObject(response);
-                        String source = obj.getString("source");
-                        Toast.makeText(MainActivity.this, source, Toast.LENGTH_SHORT).show();
 
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }, new Response.ErrorListener() {
+            FacadeNetWork facadeNetWork = FacadeNetWork.getInstance(this);
+            facadeNetWork.get(URL, new FacadeNetWork.Callback() {
                 @Override
-                public void onErrorResponse(VolleyError error) {
+                public void onSuccess(Object respone) {
+                    Toast.makeText(MainActivity.this, respone.toString(), Toast.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void onFailed(String failed) {
 
                 }
             });
 
-            mQueue.add(stringRequest);
+//            StringRequest stringRequest = new StringRequest(Request.Method.GET,
+//                    URL, new Response.Listener<String>() {
+//                @Override
+//                public void onResponse(String response) {
+//                    try {
+//                        JSONObject obj = new JSONObject(response);
+//                        String source = obj.getString("source");
+//                        Toast.makeText(MainActivity.this, source, Toast.LENGTH_SHORT).show();
+//
+//                    } catch (JSONException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//            }, new Response.ErrorListener() {
+//                @Override
+//                public void onErrorResponse(VolleyError error) {
+//
+//                }
+//            });
+//
+//            mQueue.add(stringRequest);
         }
     }
 }
