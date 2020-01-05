@@ -1,15 +1,25 @@
 apply plugin: 'com.android.application'
 
+//赋值与引用
+def cfg = rootProject.ext.android
+def appId = rootProject.ext.appId
+
 android {
-    compileSdkVersion 28
-    buildToolsVersion "29.0.2"
+    compileSdkVersion cfg.compileSdkVersion
+
     defaultConfig {
-        applicationId "com.example.dn_component"
-        minSdkVersion 15
-        targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
+        applicationId appId["app"]
+        minSdkVersion cfg.minSdkVersion
+        targetSdkVersion cfg.targetSdkVersion
+        versionCode cfg.versionCode
+        versionName cfg.versionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [moduleName: project.getName()]
+            }
+        }
     }
     buildTypes {
         release {
@@ -26,4 +36,12 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+
+    implementation project(':base')
+
+    if (isModule){
+        implementation project(':module2')
+        implementation project(':module1')
+    }
+
 }
