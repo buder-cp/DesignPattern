@@ -1,2 +1,2 @@
-include ':app', ':module1', ':module2', ':base'
+include ':app', ':module1', ':module2', ':base', ':router_annotation', ':router_compiler', ':router_core'
 rootProject.name='DN_component'

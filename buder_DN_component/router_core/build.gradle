@@ -1,11 +1,7 @@
 apply plugin: 'com.android.library'
 
-def cfg = rootProject.ext.android
-def librarys = rootProject.ext.dependencies
-
 android {
     compileSdkVersion 28
-    buildToolsVersion "29.0.2"
 
 
     defaultConfig {
@@ -34,7 +30,11 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
-    librarys.each { k, v -> api v }
 
-    api project(':router_core')
+    // compile被废弃
+    // api：同compile
+    // implementation: 不会进行传递依赖
+    // 即router-annotation模块只对 本模块(router-core) 开放,
+    // 无法在 app 模块中使用
+    api project(':router_annotation')
 }
