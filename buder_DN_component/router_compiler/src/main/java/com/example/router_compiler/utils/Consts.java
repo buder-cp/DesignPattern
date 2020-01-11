@@ -7,22 +7,21 @@ public class Consts {
 
 
     public static final ClassName ROUTER = ClassName.get(
-            "com.dn_alan.router_core", "DNRouter");
+            "com.example.router_core", "DNRouter");
 
     public static final String ARGUMENTS_NAME = "moduleName";
-    public static final String ANN_TYPE_ROUTE = "com.dn_alan.router_annotation.Route";
-    public static final String ANN_TYPE_Extra = "com.dn_alan.router_annotation.Extra";
+    public static final String ANN_TYPE_ROUTE = "com.example.router_annotation.Route";
+    public static final String ANN_TYPE_Extra = "com.example.router_annotation.Extra";
 
-
-    public static final String IROUTE_GROUP = "com.dn_alan.router_core.template.IRouteGroup";
-    public static final String IROUTE_ROOT = "com.dn_alan.router_core.template.IRouteRoot";
-    public static final String IEXTRA = "com.dn_alan.router_core.template.IExtra";
+    public static final String IROUTE_GROUP = "com.example.router_core.template.IRouteGroup";
+    public static final String IROUTE_ROOT = "com.example.router_core.template.IRouteRoot";
+    public static final String IEXTRA = "com.example.router_core.template.IExtra";
 
     public static final String METHOD_LOAD_INTO = "loadInto";
     public static final String METHOD_LOAD_EXTRA = "loadExtra";
 
     public static final String ACTIVITY = "android.app.Activity";
-    public static final String ISERVICE = "com.dn_alan.router_core.template.IService";
+    public static final String ISERVICE = "com.example.router_core.template.IService";
 
 
     private static final String LANG = "java.lang";
@@ -59,6 +58,6 @@ public class Consts {
     public static final String NAME_OF_GROUP = PROJECT + SEPARATOR + "Group" + SEPARATOR;
     public static final String NAME_OF_EXTRA = SEPARATOR + "Extra";
 
-    public static final String PACKAGE_OF_GENERATE_FILE = "com.dn_alan.router_core";
+    public static final String PACKAGE_OF_GENERATE_FILE = "com.example.router_core";
 
 }

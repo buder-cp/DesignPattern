@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.dn_alan.module2">
+    package="com.example.module2">
 
     <application android:name=".Module2Application">
         <activity android:name="com.example.module2.Module2Activity">

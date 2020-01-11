@@ -16,11 +16,13 @@ import com.squareup.javapoet.WildcardTypeName;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.TreeSet;
 
 import javax.annotation.processing.AbstractProcessor;
 import javax.annotation.processing.Filer;
@@ -36,6 +38,8 @@ import javax.lang.model.element.TypeElement;
 import javax.lang.model.type.TypeMirror;
 import javax.lang.model.util.Elements;
 import javax.lang.model.util.Types;
+
+import static javax.lang.model.element.Modifier.PUBLIC;
 
 import static javax.lang.model.element.Modifier.PUBLIC;
 
@@ -181,7 +185,7 @@ public class RouteProcessor extends AbstractProcessor {
             categories(routeMeta);
         }
 
-       //生成类需要实现的接口
+        //生成类需要实现的接口
         TypeElement iRouteGroup = elementUtils.getTypeElement(Consts.IROUTE_GROUP);
         log.i("---------" + iRouteGroup.getSimpleName());
         TypeElement iRouteRoot = elementUtils.getTypeElement(Consts.IROUTE_ROOT);

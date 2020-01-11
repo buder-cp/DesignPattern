@@ -1,4 +1,4 @@
-package com.dn_alan.module2;
+package com.example.module2;
 
 import android.app.Application;
 

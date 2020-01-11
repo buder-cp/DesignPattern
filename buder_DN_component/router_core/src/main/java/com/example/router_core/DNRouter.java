@@ -27,7 +27,7 @@ import java.util.Set;
 
 public class DNRouter {
     private static final String TAG = "DNRouter";
-    private static final String ROUTE_ROOT_PAKCAGE = "com.dn_alan.router_core";
+    private static final String ROUTE_ROOT_PAKCAGE = "com.example.router_core";
     private static final String SDK_NAME = "DNRouter";
     private static final String SEPARATOR = "$$";
     private static final String SUFFIX_ROOT = "Root";
