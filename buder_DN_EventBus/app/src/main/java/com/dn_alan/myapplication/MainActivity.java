@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
     @DNSubscribe(threadMode = DNThreadMode.MAIN)
     public void receive(Friend friend){
-//        textView.setText(friend.toString() + "==" + Thread.currentThread().getName());
+        textView.setText(friend.toString() + "==" + Thread.currentThread().getName());
         Toast.makeText(this, friend.toString(), Toast.LENGTH_SHORT).show();
     }
 
