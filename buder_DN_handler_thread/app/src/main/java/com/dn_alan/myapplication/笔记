@@ -1,0 +1,39 @@
+looper
+     for (;;) {}  i = 0
+
+
+
+MessageQueue
+     for (;;) {} i = 0
+     mMessages = null
+     mIdleHandlers.size() = 1 (挂起)
+
+     for (;;) {} i = 0
+     mMessages = 有值
+     msg.when = SystemClock.uptimeMillis()
+
+
+     msg1
+        when =当前时间+ 1小时
+        Integer.MAX_VALUE 2^31-1
+        nextPollTimeoutMillis= 1小时
+        pendingIdleHandlerCount=0
+        //阻塞1小时
+         nativePollOnce(ptr, nextPollTimeoutMillis);
+
+         msg2
+                 when =当前时间
+                 Integer.MAX_VALUE 2^31-1
+                 nextPollTimeoutMillis= 1小时
+                 pendingIdleHandlerCount=0
+                 //阻塞1小时
+                  nativePollOnce(ptr, nextPollTimeoutMillis);
+
+延时入队
+    msg上 when =当前时间+ 1小时
+    msg2  when = 当前时间 + 2小时
+
+    if (p == null || when < p.when) {
+        p == null 最后才会出现true
+        break;
+    }
