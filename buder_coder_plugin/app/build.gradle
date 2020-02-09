@@ -14,11 +14,7 @@ apply plugin: 'com.android.application'
 //    def name = '庆余年'
 //}
 
-apply plugin: 'plugindemo'
 
-plugindemo {
-    name '新世界'
-}
 
 android {
     compileSdkVersion 28
@@ -37,6 +33,12 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+}
+
+apply plugin: 'plugindemo'
+
+plugindemo {
+    name '新世界'
 }
 
 dependencies {
