@@ -1,0 +1,14 @@
+apply plugin: 'java-library'
+
+repositories {
+    google()
+    jcenter()
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'com.android.tools.build:gradle:3.5.3'
+}
+
+sourceCompatibility = "7"
+targetCompatibility = "7"

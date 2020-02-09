@@ -1,21 +1,24 @@
 apply plugin: 'com.android.application'
 
-class PluginDemo implements Plugin<Project> {
-    @Override
-    void apply(Project target) {
-        def extension = target.extensions.create('buder', ExtensionDemo)
-        target.afterEvaluate {
-            println "watch ${extension.name}"
-        }
-    }
+//class PluginDemo implements Plugin<Project> {
+//    @Override
+//    void apply(Project target) {
+//        def extension = target.extensions.create('buder', ExtensionDemo)
+//        target.afterEvaluate {
+//            println "watch ${extension.name}"
+//        }
+//    }
+//}
+//
+//class ExtensionDemo {
+//    def name = '庆余年'
+//}
+
+apply plugin: 'plugindemo'
+
+plugindemo {
+    name '新世界'
 }
-
-class ExtensionDemo {
-    def name = '庆余年'
-}
-
-apply plugin: PluginDemo
-
 
 android {
     compileSdkVersion 28

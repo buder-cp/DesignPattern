@@ -1,2 +1,2 @@
-include ':app'
+include ':app', ':buildSrc'
 rootProject.name='plugin'
