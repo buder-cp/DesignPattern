@@ -41,7 +41,7 @@ public class ParseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_parse);
         this.tv = (TextView) findViewById(R.id.tv);
-        ARouter.getInstance().inject(this);
+        ARouter.getInstance().inject(this);//注意添加这个注册函数
 
         Log.i(TAG, "onCreate: name=" +name+" age="+age+" person"+person+" testObj="+testObj+" mTestObj="+mTestObj);
         tv.setText(name+"\n"+age+"\n"+person);

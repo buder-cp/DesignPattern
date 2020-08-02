@@ -57,6 +57,7 @@ public class TestInterceptor implements IInterceptor {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     postcard.withString("extra", "我是在拦截器中附加的参数");
+//                    postcard.withInt("number", 666);
                     callback.onContinue(postcard);
                 }
             });

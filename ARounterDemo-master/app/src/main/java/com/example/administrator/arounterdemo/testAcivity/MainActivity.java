@@ -24,6 +24,10 @@ import com.example.administrator.arounterdemo.testService.TestService;
 
 import java.lang.ref.WeakReference;
 
+/**
+ * https://www.jianshu.com/p/a57dd8c8f10e
+ */
+
 public class MainActivity extends AppCompatActivity {
 
     public static final int REQUEST_CODE = 2;

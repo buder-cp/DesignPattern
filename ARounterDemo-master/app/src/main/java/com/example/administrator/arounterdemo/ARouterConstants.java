@@ -1,7 +1,7 @@
 package com.example.administrator.arounterdemo;
 
 /**
- * @author xujun  on 2/7/2018.
+ * https://www.jianshu.com/p/a57dd8c8f10e
  */
 public class ARouterConstants {
 

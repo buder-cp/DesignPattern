@@ -12,6 +12,10 @@ import com.example.aroutelogin.R;
 import com.example.aroutelogin.interceptor.LoginNavigationCallbackImpl;
 import com.example.aroutelogin.interfaces.RoutePath;
 
+/**
+ * https://www.jianshu.com/p/d5a83ccf1135
+ */
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
     @Override
