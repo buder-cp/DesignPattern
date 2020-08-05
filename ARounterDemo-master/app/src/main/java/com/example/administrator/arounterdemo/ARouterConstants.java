@@ -21,4 +21,7 @@ public class ARouterConstants {
     public static final String TEST_ACTIVITY3 = TEST+"activity3";
     public static final String TEST_ACTIVITY4 = TEST+"activity4";
     public static final String TEST_ACTIVITY5 = TEST+"activity5";
+
+
+    public static final String DEGRADE = TEST+"degrade";
 }

@@ -1,6 +1,7 @@
 package com.example.administrator.arounterdemo.testAcivity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -60,8 +61,8 @@ public class MainActivity extends AppCompatActivity {
                 ARouter.getInstance().build(ARouterConstants.COM_ACTIVITY1).navigation();
                 break;
             case R.id.btn_2:
-//                ARouterCallBack();//单个监听
-                ARouterDownDelegate(); //全局监听
+                ARouterCallBack();//单一路由监听
+                ARouterDownDelegate(); //全局路由监听
                 break;
             case R.id.btn_3:
                 Person person = new Person();
@@ -109,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * 测试局部降级监听
+     * 测试单一路由，降级监听，例如单一路由失败的话进行后续处理
      */
     private void ARouterCallBack() {
         ARouter.getInstance()
@@ -124,6 +125,9 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onLost(Postcard postcard) {
                         Log.e(TAG, "onArrival: 找不到了 ");
+                        Toast.makeText(MainActivity.this, "未找到目标页面 path=" + postcard.getPath() + " group=" + postcard.getGroup() +
+                                " 做降级处理，5s后跳转降级页", Toast.LENGTH_LONG).show();
+                        jumpDegradePage(MainActivity.this, postcard);
                     }
 
                     @Override
@@ -139,10 +143,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * 测试全局降级监听，看打印 PretreatmentServiceImpl
+     * 测试全局降级监听，全局路由监听，当找不到目标页面时，会调用DefaultDegrade
+     * 走onLost方法，处理找不到页面的后续操作
      */
     private void ARouterDownDelegate() {
         ARouter.getInstance().build("/com/hq").navigation();
+    }
+
+    private void jumpDegradePage(final Context context, final Postcard postcard) {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                ARouter.getInstance().build(ARouterConstants.DEGRADE)
+                        .navigation(context);
+            }
+        }, 5 * 1000);
     }
 
     @Override
