@@ -2,6 +2,7 @@ package com.example.aroutelogin.ui;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -34,6 +35,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
+        Log.i("buder：", "onClick");
         switch (v.getId()) {
             case R.id.btn_login:
                 ARouter.getInstance().build(RoutePath.LOGIN_PATH)

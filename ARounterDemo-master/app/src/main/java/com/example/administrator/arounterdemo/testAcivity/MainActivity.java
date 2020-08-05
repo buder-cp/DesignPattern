@@ -60,7 +60,8 @@ public class MainActivity extends AppCompatActivity {
                 ARouter.getInstance().build(ARouterConstants.COM_ACTIVITY1).navigation();
                 break;
             case R.id.btn_2:
-                ARounterCallBack();
+//                ARouterCallBack();//单个监听
+                ARouterDownDelegate(); //全局监听
                 break;
             case R.id.btn_3:
                 Person person = new Person();
@@ -107,9 +108,12 @@ public class MainActivity extends AppCompatActivity {
         Log.i(TAG, "testIProvider: result=" +result);
     }
 
-    private void ARounterCallBack() {
+    /**
+     * 测试局部降级监听
+     */
+    private void ARouterCallBack() {
         ARouter.getInstance()
-                .build(ARouterConstants.COM_ACTIVITY1)
+                .build("/com/hq")
                 .navigation(this, new NavCallback() {
 
                     @Override
@@ -132,6 +136,13 @@ public class MainActivity extends AppCompatActivity {
                         Log.e(TAG, "onArrival: 被拦截了 ");
                     }
                 });
+    }
+
+    /**
+     * 测试全局降级监听，看打印 PretreatmentServiceImpl
+     */
+    private void ARouterDownDelegate() {
+        ARouter.getInstance().build("/com/hq").navigation();
     }
 
     @Override

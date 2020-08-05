@@ -1,6 +1,7 @@
 package com.example.aroutelogin.interceptor;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import com.alibaba.android.arouter.facade.Postcard;
 import com.alibaba.android.arouter.facade.callback.NavigationCallback;
@@ -12,21 +13,22 @@ import com.example.aroutelogin.interfaces.RoutePath;
 public class LoginNavigationCallbackImpl  implements NavigationCallback {
     @Override //找到了
     public void onFound(Postcard postcard) {
-
+        Log.e("buder", "onFound");
     }
 
     @Override //找不到了
     public void onLost(Postcard postcard) {
-
+        Log.e("buder", "onLost");
     }
 
     @Override    //跳转成功了
     public void onArrival(Postcard postcard) {
-
+        Log.e("buder", "onArrival");
     }
 
     @Override
     public void onInterrupt(Postcard postcard) {
+        Log.e("buder", "onInterrupt");
         String path = postcard.getPath();
         LogUtils.v(path);
         Bundle bundle = postcard.getExtras();

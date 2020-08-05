@@ -1,6 +1,8 @@
 package com.example.aroutelogin.interceptor;
 
 import android.content.Context;
+import android.util.Log;
+
 import com.alibaba.android.arouter.facade.Postcard;
 import com.alibaba.android.arouter.facade.annotation.Interceptor;
 import com.alibaba.android.arouter.facade.callback.InterceptorCallback;
@@ -15,6 +17,7 @@ import com.example.aroutelogin.interfaces.RoutePath;
 public class LoginInterceptorImpl implements IInterceptor {
     @Override
     public void process(Postcard postcard, InterceptorCallback callback) {
+        Log.e("buder", "onFound");
         String path = postcard.getPath();
         LogUtils.e(path);
         boolean isLogin = SPUtils.getInstance().getBoolean(RoutePath.SP_IS_LOGIN, false);
