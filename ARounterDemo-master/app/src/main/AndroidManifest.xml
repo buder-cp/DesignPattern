@@ -43,6 +43,7 @@
         </activity>
         <activity android:name=".testAcivity.TestActivity1">
         </activity>
+        <activity android:name=".testAcivity.DegradeActivity"/>
     </application>
 
 </manifest>

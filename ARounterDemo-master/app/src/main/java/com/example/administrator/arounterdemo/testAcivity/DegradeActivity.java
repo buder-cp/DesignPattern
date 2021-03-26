@@ -6,30 +6,19 @@ import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.example.administrator.arounterdemo.ARouterConstants;
-
+import com.example.administrator.arounterdemo.R;
 
 @Route(path = ARouterConstants.DEGRADE)
 public class DegradeActivity extends Activity {
 
-
     private TextView mPath;
-    private TextView mParams;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        setContentView(com.alibaba.android.router.module.R.layout.activity_modul);
-//        mPath = (TextView) findViewById(com.alibaba.android.router.module.R.id.path);
-//        mParams = (TextView) findViewById(com.alibaba.android.router.module.R.id.params);
+        setContentView(R.layout.activity_error_page);
+        mPath = (TextView) findViewById(R.id.error_tv);
         showPath();
-        showParams();
-    }
-
-
-    private void showParams() {
-//        String path=getIntent().getStringExtra(DefaultDegrade.KEY_PATH);
-//        mParams.setText("被降级postcard path="+path);
     }
 
     private void showPath() {

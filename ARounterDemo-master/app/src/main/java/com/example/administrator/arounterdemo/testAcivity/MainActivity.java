@@ -27,6 +27,7 @@ import java.lang.ref.WeakReference;
 
 /**
  * https://www.jianshu.com/p/a57dd8c8f10e
+ * https://blog.csdn.net/gdutxiaoxu/article/details/81036719
  */
 
 public class MainActivity extends AppCompatActivity {
@@ -61,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
                 ARouter.getInstance().build(ARouterConstants.COM_ACTIVITY1).navigation();
                 break;
             case R.id.btn_2:
-                ARouterCallBack();//单一路由监听
+//                ARouterCallBack();//单一路由监听
                 ARouterDownDelegate(); //全局路由监听
                 break;
             case R.id.btn_3:
